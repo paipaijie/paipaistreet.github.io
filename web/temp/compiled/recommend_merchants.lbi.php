@@ -13,18 +13,18 @@
 				</div>
 				<div class="bd">
 					<ul>
-						<?php $_from = $this->_var['ad_child']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'ad_0_64550700_1535356129');$this->_foreach['noad'] = array('total' => count($_from), 'iteration' => 0);
+						<?php $_from = $this->_var['ad_child']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'ad_0_85449200_1535356795');$this->_foreach['noad'] = array('total' => count($_from), 'iteration' => 0);
 if ($this->_foreach['noad']['total'] > 0):
-    foreach ($_from AS $this->_var['ad_0_64550700_1535356129']):
+    foreach ($_from AS $this->_var['ad_0_85449200_1535356795']):
         $this->_foreach['noad']['iteration']++;
 ?>
 						<li>
-							<a href="<?php echo $this->_var['ad_0_64550700_1535356129']['ad_link']; ?>">
-								<img src="<?php echo $this->_var['ad_0_64550700_1535356129']['ad_code']; ?>" width="<?php echo $this->_var['ad_0_64550700_1535356129']['ad_width']; ?>" height="<?php echo $this->_var['ad_0_64550700_1535356129']['ad_height']; ?>" alt="" class="cover">
-								<div class="logo-wrap"><div class="sbs-logo"><img src="<?php echo $this->_var['ad_0_64550700_1535356129']['ad_bg_code']; ?>" alt=""></div></div>
+							<a href="<?php echo $this->_var['ad_0_85449200_1535356795']['ad_link']; ?>">
+								<img src="<?php echo $this->_var['ad_0_85449200_1535356795']['ad_code']; ?>" width="<?php echo $this->_var['ad_0_85449200_1535356795']['ad_width']; ?>" height="<?php echo $this->_var['ad_0_85449200_1535356795']['ad_height']; ?>" alt="" class="cover">
+								<div class="logo-wrap"><div class="sbs-logo"><img src="<?php echo $this->_var['ad_0_85449200_1535356795']['ad_bg_code']; ?>" alt=""></div></div>
 								<div class="intro">
-									<span><?php echo $this->_var['ad_0_64550700_1535356129']['b_title']; ?></span>
-									<em><?php echo $this->_var['ad_0_64550700_1535356129']['s_title']; ?></em>
+									<span><?php echo $this->_var['ad_0_85449200_1535356795']['b_title']; ?></span>
+									<em><?php echo $this->_var['ad_0_85449200_1535356795']['s_title']; ?></em>
 								</div>
 							</a>
 						</li>
@@ -38,19 +38,19 @@ if ($this->_foreach['noad']['total'] > 0):
 <div class="store-channel" id="storeRec">
 	<div class="ftit"><h3><?php echo $this->_var['lang']['recommended_store']; ?></h3></div>
 	<div class="rec-store-list">
-		<?php $_from = $this->_var['ad_child']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'ad_0_64550700_1535356129');$this->_foreach['noad'] = array('total' => count($_from), 'iteration' => 0);
+		<?php $_from = $this->_var['ad_child']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'ad_0_85449200_1535356795');$this->_foreach['noad'] = array('total' => count($_from), 'iteration' => 0);
 if ($this->_foreach['noad']['total'] > 0):
-    foreach ($_from AS $this->_var['ad_0_64550700_1535356129']):
+    foreach ($_from AS $this->_var['ad_0_85449200_1535356795']):
         $this->_foreach['noad']['iteration']++;
 ?>
 		<div class="rec-store-item opacity_img">
-			<a href="<?php echo $this->_var['ad_0_64550700_1535356129']['ad_link']; ?>" target="_blank">
-            <div class="p-img"><img src="<?php echo $this->_var['ad_0_64550700_1535356129']['ad_code']; ?>" width="<?php echo $this->_var['ad_0_64550700_1535356129']['ad_width']; ?>" height="<?php echo $this->_var['ad_0_64550700_1535356129']['ad_height']; ?>"></div>
+			<a href="<?php echo $this->_var['ad_0_85449200_1535356795']['ad_link']; ?>" target="_blank">
+            <div class="p-img"><img src="<?php echo $this->_var['ad_0_85449200_1535356795']['ad_code']; ?>" width="<?php echo $this->_var['ad_0_85449200_1535356795']['ad_width']; ?>" height="<?php echo $this->_var['ad_0_85449200_1535356795']['ad_height']; ?>"></div>
             <div class="info">
-                <div class="s-logo"><div class="img"><img src="<?php echo $this->_var['ad_0_64550700_1535356129']['ad_bg_code']; ?>"></div></div>
+                <div class="s-logo"><div class="img"><img src="<?php echo $this->_var['ad_0_85449200_1535356795']['ad_bg_code']; ?>"></div></div>
                 <div class="s-title">
-                        <div class="tit"><?php echo $this->_var['ad_0_64550700_1535356129']['b_title']; ?></div>
-                    <div class="ui-tit"><?php echo $this->_var['ad_0_64550700_1535356129']['s_title']; ?></div>
+                        <div class="tit"><?php echo $this->_var['ad_0_85449200_1535356795']['b_title']; ?></div>
+                    <div class="ui-tit"><?php echo $this->_var['ad_0_85449200_1535356795']['s_title']; ?></div>
                 </div>
             </div>
 			</a>
