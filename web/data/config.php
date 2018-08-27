@@ -42,8 +42,6 @@ define('EC_TEMPLATE', 'ecmoban_dsc2017');
 
 //define('DEBUG_MODE', 8);
 
-//
-
 
 
 

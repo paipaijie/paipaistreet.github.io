@@ -6,7 +6,7 @@
 
 function group_buy_list($ru_id)
 {
-	//ceshieryi 
+	
 	$result = get_filter();  //admin\includes\lib_main.php文件的第619行,取得上次的过滤条件
 
 	if ($result === false) { // 
@@ -286,7 +286,7 @@ else {
 		}
 		
 		else {    // 修改功能
-			
+			//  测试提交功能
 			$group_buy_id = intval($_REQUEST['id']);
 
 			if ($group_buy_id <= 0) {
@@ -302,9 +302,11 @@ else {
 			//过滤
 			$ext_info = unserialize($group_buy['ext_info']);
 			//合并
-			$group_buy = array_merge($group_buy, $ext_info);			
+			$group_buy = array_merge($group_buy, $ext_info);	
+
 			$group_buy['formated_start_date'] = local_date('Y-m-d H:i:s', $group_buy['start_time']);
 			$group_buy['formated_end_date'] = local_date('Y-m-d H:i:s', $group_buy['end_time']);
+			var_dump($group_buy);		
 			//价格遍历
 			$price_ladder = $group_buy['price_ladder'];
 			if (!is_array($price_ladder) || empty($price_ladder)) {
