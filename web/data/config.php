@@ -1,6 +1,6 @@
 <?php
 // database host
-$db_host   = "127.0.0.1:3306";
+$db_host   = "localhost";
 
 // database name
 $db_name   = "paipai";
@@ -9,7 +9,7 @@ $db_name   = "paipai";
 $db_user   = "root";
 
 // database password
-$db_pass   = "My2016where";//%DXtjyWc6i#Rqia
+$db_pass   = "root";//%DXtjyWc6i#Rqia
 
 // table prefix
 $prefix    = "dsc_";
