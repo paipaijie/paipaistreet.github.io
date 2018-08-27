@@ -6,7 +6,7 @@
 
 function group_buy_list($ru_id)
 {
-	
+	//ceshieryi 
 	$result = get_filter();  //admin\includes\lib_main.php文件的第619行,取得上次的过滤条件
 
 	if ($result === false) { // 
