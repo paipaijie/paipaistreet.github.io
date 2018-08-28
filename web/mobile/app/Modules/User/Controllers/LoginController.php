@@ -731,7 +731,6 @@ class LoginController extends \App\Modules\Base\Controllers\FrontendController
 			if ($article_id) {
 				$result = dao('article')->field('title, content')->where(array('article_id' => $article_id))->find();
 			}
-
 			exit(json_encode(array('status' => 0, 'data' => $result)));
 		}
 	}

@@ -15,22 +15,22 @@
     <?php if ($this->_var['index_article_cat']): ?>
     <div class="vip-item">
         <div class="tit">
-            <?php $_from = $this->_var['index_article_cat']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('key', 'cat_0_80175700_1535356795');$this->_foreach['cat'] = array('total' => count($_from), 'iteration' => 0);
+            <?php $_from = $this->_var['index_article_cat']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('key', 'cat_0_54671800_1535422894');$this->_foreach['cat'] = array('total' => count($_from), 'iteration' => 0);
 if ($this->_foreach['cat']['total'] > 0):
-    foreach ($_from AS $this->_var['key'] => $this->_var['cat_0_80175700_1535356795']):
+    foreach ($_from AS $this->_var['key'] => $this->_var['cat_0_54671800_1535422894']):
         $this->_foreach['cat']['iteration']++;
 ?>
-            <a href="javascript:void(0);" class="tab_head_item"><?php echo $this->_var['cat_0_80175700_1535356795']['cat']['name']; ?></a>
+            <a href="javascript:void(0);" class="tab_head_item"><?php echo $this->_var['cat_0_54671800_1535422894']['cat']['name']; ?></a>
             <?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
         </div>
         <div class="con">
-            <?php $_from = $this->_var['index_article_cat']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'cat_0_80175700_1535356795');$this->_foreach['cat'] = array('total' => count($_from), 'iteration' => 0);
+            <?php $_from = $this->_var['index_article_cat']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'cat_0_54671800_1535422894');$this->_foreach['cat'] = array('total' => count($_from), 'iteration' => 0);
 if ($this->_foreach['cat']['total'] > 0):
-    foreach ($_from AS $this->_var['cat_0_80175700_1535356795']):
+    foreach ($_from AS $this->_var['cat_0_54671800_1535422894']):
         $this->_foreach['cat']['iteration']++;
 ?>
             <ul <?php if (! ($this->_foreach['cat']['iteration'] <= 1)): ?>style="display:none;"<?php endif; ?>>
-                <?php $_from = $this->_var['cat_0_80175700_1535356795']['arr']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'article');$this->_foreach['article'] = array('total' => count($_from), 'iteration' => 0);
+                <?php $_from = $this->_var['cat_0_54671800_1535422894']['arr']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'article');$this->_foreach['article'] = array('total' => count($_from), 'iteration' => 0);
 if ($this->_foreach['article']['total'] > 0):
     foreach ($_from AS $this->_var['article']):
         $this->_foreach['article']['iteration']++;
