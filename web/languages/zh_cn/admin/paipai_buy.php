@@ -1,7 +1,7 @@
 <?php
 //zend by 多点乐  禁止倒卖 一经发现停止任何服务
 $_LANG['lab_market_price'] = '市场售价：';
-
+$_LANG['lab_cost_price'] = '批发售价：';
 $_LANG['paipai_buy_list'] = '拍拍活动列表';
 
 $_LANG['add_group_buy'] = '添加拍拍活动';
@@ -10,6 +10,7 @@ $_LANG['edit_group_buy'] = '编辑拍拍活动';
 $_LANG['goods_name'] = '商品名称';
 $_LANG['start_date'] = '开始时间';
 $_LANG['end_date'] = '结束时间';
+$_LANG['goods_num'] = '活动期数';
 $_LANG['deposit'] = '保证金';
 $_LANG['restrict_amount'] = '限购';
 $_LANG['gift_integral'] = '赠送积分';
@@ -75,8 +76,15 @@ $_LANG['error_goods_null'] = '您没有选择拍拍商品！';
 $_LANG['error_goods_exist'] = '您选择的商品目前有一个拍拍活动正在进行！';
 $_LANG['error_price_ladder'] = '您没有输入有效的价格阶梯！';
 $_LANG['error_restrict_amount'] = '限购数量不能小于价格阶梯中的最大数量';
-$_LANG['js_languages']['error_goods_null'] = '您没有选择拍拍商品！';
+$_LANG['goods_start_fee'] = '起拍价不能为空,须填';
+$_LANG['notice_goods_deposit'] = '保证金必须大于批发价';
+$_LANG['notice_goods_deposit_market'] = '保证金不能大于商品销售价';
+$_LANG['deposit_not_edit'] = '起拍价不可更改';
+$_LANG['error_goods_not_end'] = '您选择的商品目前有一个拍拍结束时间与添加的开始时间冲突！';
+
+$_LANG['js_languages']['error_goods_null'] = '请选择拍拍商品！';
 $_LANG['js_languages']['error_deposit'] = '您输入的保证金不是数字！';
+$_LANG['js_languages']['error_goods_deposit'] = '保证金必须大于批发价！';
 $_LANG['js_languages']['error_restrict_amount'] = '您输入的限购数量不是整数！';
 $_LANG['js_languages']['error_gift_integral'] = '您输入的赠送积分数不是整数！';
 $_LANG['js_languages']['search_is_null'] = '没有搜索到任何商品，请重新搜索';
@@ -84,6 +92,8 @@ $_LANG['js_languages']['error_goods_price'] = '您没有输入有效的价格阶
 $_LANG['js_languages']['error_goods_nunber'] = '您没有输入有效的价格阶梯数量';
 $_LANG['js_languages']['ladder_price_min_notice'] = '阶梯价格不能小于保证金金额！';
 $_LANG['js_languages']['batch_drop_confirm'] = '您确定要删除选定的拍拍活动吗？';
+$_LANG['js_languages']['goods_start_fee'] = '请填写起拍价,可为0';
+
 $_LANG['error_exist_order'] = '该拍拍活动已经有订单，不能删除！';
 $_LANG['batch_drop_success'] = '成功删除了 %s 条拍拍活动记录（已经有订单的拍拍活动不能删除）。';
 $_LANG['no_select_group_buy'] = '您现在没有拍拍活动记录！';

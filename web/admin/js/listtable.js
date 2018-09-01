@@ -232,7 +232,7 @@ listTable.sort = function(sort_by, sort_order)
  * 翻页
  */
 listTable.gotoPage = function(page)
-{
+{ 
   if (page != null) this.filter['page'] = page;
 
   if (this.filter['page'] > this.pageCount) this.filter['page'] = 1;
@@ -291,7 +291,7 @@ listTable.gotoPagePrev = function()
 }
 
 listTable.gotoPageNext = function()
-{
+{ 
   if (this.filter.page < listTable.pageCount)
   {
     listTable.gotoPage(parseInt(this.filter.page) + 1);

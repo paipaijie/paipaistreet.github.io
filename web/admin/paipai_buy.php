@@ -162,8 +162,18 @@ function goods_paipai_buy($goods_id)
 {
 	$paipai_status=2;
 	$sql = 'SELECT * FROM ' . $GLOBALS['ecs']->table('paipai_list') . (' WHERE goods_id = \'' . $goods_id . '\' ') . ' AND ppj_staus <> \'' . $paipai_status . '\''. ' AND start_time <= ' . gmtime() . ' AND end_time >= ' . gmtime();
-	
 	return $GLOBALS['db']->getRow($sql);
+}
+//获取最近一条拍拍活动商品信息
+function goods_paipai_activity($goods_id){
+
+	$sql="SELECT *  FROM `dsc_paipai_list`  WHERE goods_id='{$goods_id}'  ORDER BY ppj_no DESC LIMIT 1 ";
+    return $GLOBALS['db']->fetchRow($GLOBALS['db']->query($sql));
+}
+//查询产品的基本信息
+function goods_news($goods_id){
+    $sql="SELECT goods_id,goods_sn,cost_price FROM dsc_goods WHERE goods_id='{$goods_id}' ";
+    return $GLOBALS['db']->fetchRow($GLOBALS['db']->query($sql));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -306,7 +316,7 @@ else {
 
 			$group_buy['formated_start_date'] = local_date('Y-m-d H:i:s', $group_buy['start_time']);
 			$group_buy['formated_end_date'] = local_date('Y-m-d H:i:s', $group_buy['end_time']);
-			var_dump($group_buy);		
+		
 			//价格遍历
 			$price_ladder = $group_buy['price_ladder'];
 			if (!is_array($price_ladder) || empty($price_ladder)) {
@@ -561,32 +571,34 @@ else {
 		
      //////////////////////////////////////////////////////////////////////////		// 新增活动开始
 		else {
-			
+
 			$goods_id = intval($_POST['goods_id']);  //获取变量的整数值
 
 			if ($goods_id <= 0) {
 				sys_msg($_LANG['error_goods_null']); //您没有选择拍拍商品
 			}
 			
-			
+			$goods_act=goods_paipai_activity($goods_id);  //查询该产品的最近一条的拍拍活动
+
 			$info = goods_paipai_buy($goods_id);  //查询该产品的已有的拍拍活动
-			
+
 			if ($info && $info['ppj_id'] != $group_buy_id) {
 				sys_msg($_LANG['error_goods_exist']);   //您选择的商品目前有一个拍拍活动正在进行
 			}
 			
+
 			//该商品的拍拍期数，自动加1
-			$ppj_no =intval(info['ppj_no'])+1;
+			$ppj_no_new =intval($goods_act['ppj_no'])+1;
 
 			$goods_name = $db->getOne('SELECT goods_name FROM ' . $ecs->table('goods') . (' WHERE goods_id = \'' . $goods_id . '\''));
-	
 			
 			$ppj_name = empty($_POST['act_name']) ? $goods_name : sub_str($_POST['act_name'], 0, 255, false);
-			
-			//保证金
-			$deposit = floatval($_POST['deposit']);
-			if ($deposit < 0) {
-				$deposit = 0;
+
+			//保证金     
+			$deposit = floatval($_POST['ppl_margin_fee']);
+			$goods_news=goods_news($goods_id);
+			if ($deposit <= floatval($goods_news['cost_price'])) {    //保证金必须大于批发价 
+				sys_msg($_LANG['notice_goods_deposit']);
 			}
 			
 			// 起拍价
@@ -617,11 +629,8 @@ else {
 			
 			$ppj_endtapy_time = intval($_POST['ppj_endtapy_time']);
 
-           $ppj_addfee_type=2;   //1，按固定增长比例增加，2.自定义方式增加 ,此处默认阶梯，后期扩展
+            $ppj_addfee_type=2;   //1，按固定增长比例增加，2.自定义方式增加 ,此处默认阶梯，后期扩展
            
-           $ppj_staus=0;     //活动状态
-           
-
            //阶梯价格数组
 			$price_ladder = array();
 			
@@ -656,11 +665,10 @@ else {
 			}
 			
 			//商品的市场销售价
-			$market_price = $db->getOne('SELECT market_price FROM ' . $ecs->table('goods') . (' WHERE goods_id = \'' . $goods_id . '\''));
-			$market_price=floatval($market_price);
-
+			$goods_price = $db->getOne('SELECT market_price FROM ' . $ecs->table('goods') . (' WHERE goods_id = \'' . $goods_id . '\''));
+			$market_price=floatval($goods_price);
 			if($deposit>$market_price){
-				sys_msg("保证金不能大于商品销售价"); 
+				sys_msg($_LANG['notice_goods_deposit_market']);  //保证金不能大于商品销售价
 			}
 
 			if (count($price_ladder) < 1) {
@@ -682,15 +690,15 @@ else {
 			$start_time = local_strtotime($_POST['start_time']);//开始时间
 			
 			$end_time = local_strtotime($_POST['end_time']);//结束时间
-			
-			$ppj_createtime=local_strtotime(gmtime());
+
+			$ppj_createtime=gmtime();
 
 			if ($end_time <= $start_time) {
 				sys_msg($_LANG['invalid_time']);//输入的无效时间
 			}
 			
             $ppj_staus=0;     //活动状态   未开始
-			
+			 
 			if($start_time < $ppj_createtime){
 				$ppj_staus=1 ;//活动已开始,进行中
 			}
@@ -698,15 +706,13 @@ else {
 			if($end_time < $ppj_createtime){
 				$ppj_staus=2; //活动已结束
 			}
-			
-
 
 			$is_hot = isset($_REQUEST['is_hot']) ? $_REQUEST['is_hot'] : 0;
 			
 			$is_new = isset($_REQUEST['is_new']) ? $_REQUEST['is_new'] : 0;
 			$review_status=3;
 			
-			$group_buy = array('ppj_name' => $ppj_name,'act_desc' => $_POST['act_desc'],'goods_id' => $goods_id,'goods_name' => $goods_name,'start_time' => $start_time,'end_time' => $end_time, 'review_status' => $review_status, 'is_hot' => $is_hot, 'is_new' => $is_new, 'ppj_margin_fee' => $deposit,  'ppj_no' =>$ppj_no,'goods_count' => $restrict_amount,'ppj_start_fee' => $ppj_start_fee,'ppj_buy_fee' =>$ppj_buy_fee,'ppj_addfee_type' => $ppj_addfee_type,'ppj_startpay_time' => $ppj_startpay_time,'ppj_endtapy_time' => $ppj_endtapy_time ,'ppj_staus' => $ppj_staus,'ppj_createtime' => $ppj_createtime, 'ext_info' => serialize(array('price_ladder' => $price_ladder, 'restrict_amount' => $restrict_amount)));
+			$group_buy = array('ppj_name' => $ppj_name,'act_desc' => $_POST['act_desc'],'goods_id' => $goods_id,'goods_name' => $goods_name,'start_time' => $start_time,'end_time' => $end_time, 'review_status' => $review_status, 'is_hot' => $is_hot, 'is_new' => $is_new, 'ppj_margin_fee' => $deposit, 'ppj_no' =>$ppj_no_new,'goods_count' => $restrict_amount,'ppj_start_fee' => $ppj_start_fee,'ppj_buy_fee' =>$ppj_buy_fee,'ppj_addfee_type' => $ppj_addfee_type,'ppj_startpay_time' => $ppj_startpay_time,'ppj_endpay_time' => $ppj_endpay_time ,'ppj_staus' => $ppj_staus,'ppj_createtime' => $ppj_createtime, 'ext_info' => serialize(array('price_ladder' => $price_ladder, 'restrict_amount' => $restrict_amount)),'gift_integral'=>$_POST['gift_integral']);
 			
 			clear_cache_files();
 
@@ -715,7 +721,7 @@ else {
 			*fgc
 			*/
 			
-			if (0 < $group_buy_id) {//编辑
+			if (0 < $group_buy_id) {//
 				
 				//var_dump($group_buy_id);
 				//exit;
@@ -800,15 +806,16 @@ else {
 				$ext_info = serialize(array('price_ladder' => $price_ladder, 'restrict_amount' => $restrict_amount));
 				
 				
-				$sql = "UPDATE ". $ecs->table("paipai_list") . ' SET ppj_margin_fee=\''.$deposit .'\',ppj_start_fee=\'' .$ppj_start_fee .'\',ppj_endtapy_time=\''.$ppj_endtapy_time.'\',ppj_startpay_time=\''.$ppj_startpay_time.'\',ppj_buy_fee=\''.$ppj_buy_fee.'\',goods_count=\''.$restrict_amount.'\',start_time=\''.$start_time.'\',end_time=\''.$end_time.'\',ext_info=\''.$ext_info.'\' ' . (' WHERE ppj_id = \'' . $group_buy_id . '\' LIMIT 1');
+				$sql = "UPDATE ". $ecs->table("paipai_list") . ' SET ppj_margin_fee=\''.$deposit .'\',ppj_start_fee=\'' .$ppj_start_fee .'\',ppj_endpay_time=\''.$ppj_endpay_time.'\',ppj_startpay_time=\''.$ppj_startpay_time.'\',ppj_buy_fee=\''.$ppj_buy_fee.'\',goods_count=\''.$restrict_amount.'\',start_time=\''.$start_time.'\',end_time=\''.$end_time.'\',gift_integral=\''.$gift_integral.'\',ext_info=\''.$ext_info.'\' ' . (' WHERE ppj_id = \'' . $group_buy_id . '\' LIMIT 1');
 				
 				//var_dump($sql);
 				//exit;
 				
 				$result = $db->query($sql);
-				if($result > 0){
-					return true;
-				}else{
+
+				if($result < 0){
+				// 	return true;
+				// }else{
 					return false;
 				}
 				
@@ -823,7 +830,11 @@ else {
 			}
 			
 			else {  // 新增
-				
+
+				if($group_buy['start_time'] < $goods_act['end_time']){
+			           sys_msg($_LANG['error_goods_not_end']);   //您选择的商品目前有一个拍拍结束时间与添加的开始时间冲突
+		        }
+
 				$group_buy['user_id'] = $adminru['ru_id'];
 				
 				$db->autoExecute($ecs->table('paipai_list'), $group_buy, 'INSERT');

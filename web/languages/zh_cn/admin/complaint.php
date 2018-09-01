@@ -96,4 +96,5 @@ $_LANG['operation_prompt_content']['list'][2] = '可进行投诉审核。审核�
 $_LANG['operation_prompt_content']['type'][0] = '投诉类型管理。';
 $_LANG['operation_prompt_content']['info'][0] = '投诉类型添加/编辑。';
 
+
 ?>

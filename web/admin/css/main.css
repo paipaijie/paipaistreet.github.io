@@ -1558,6 +1558,19 @@ i.sc_icon_dsz{ position:absolute; width:48px; height:56px; background-position:-
 
 .order_number{ position:relative;}
 
+/*订单拍拍街列表*/
+.ppj_order{ border-bottom:1px solid #62b3ff; height:34px; margin-bottom: 20px; /* position:absolute; left:0; top:-4px;*/}
+.ppj_order a{ float:left; display:block; height:33px; border:1px solid #62b3ff; border-bottom:0; border-radius:3px 3px 0 0; margin-right:7px; text-align:center; color:#717171; line-height:33px; padding:0 15px;}
+.ppj_order a:last-child{ margin-right:0;}
+.ppj_order a.current{ color:#62b3ff; font-weight:bold;}
+.ppj_order a.current{ border-bottom:1px solid #f7f7f7;}
+
+.order-coomon-head .refresh{ margin:4px 10px 0 15px;}
+.order-coomon-head .search{ margin-top:5px;}
+.order-coomon-head .fbutton{ margin-top:7px;}
+
+.order_number{ position:relative;}
+
 /*订单详情*/
 .order_info .s-text{ min-width:130px; right:-46px;}
 .order_info_handle{ position:absolute; z-index:9; font-size:0; right:0; bottom:-54px;}

@@ -80,18 +80,19 @@
                     	<table cellpadding="1" cellspacing="1" class="table_layout">
                         	<thead>
                             	<tr>
-                                	<th width="3%" class="sign"><div class="tDiv"><input type="checkbox" name="all_list" class="checkbox" id="all_list" /><label for="all_list" class="checkbox_stars"></label></div></th>
-                                    <th width="5%"><div class="tDiv">{$lang.record_id}</div></th>
-                                    <th width="30%"><div class="tDiv">{$lang.goods_name}</div></th>
-                                    <th width="10%"><div class="tDiv">{$lang.goods_steps_name}</div></th>
-                                    <th width="8%"><div class="tDiv">{$lang.end_date}</div></th>
+                                	<th width="2%" class="sign"><div class="tDiv"><input type="checkbox" name="all_list" class="checkbox" id="all_list" /><label for="all_list" class="checkbox_stars"></label></div></th>
+                                    <th width="4%"><div class="tDiv">{$lang.record_id}</div></th>
+                                    <th width="20%"><div class="tDiv">{$lang.goods_name}</div></th>
+                                    <th width="6%"><div class="tDiv">{$lang.goods_steps_name}</div></th>
+                                    <th width="6%"><div class="tDiv">{$lang.end_date}</div></th>
+                                    <th width="6%"><div class="tDiv">{$lang.goods_num}</div></th>
                                     <th width="6%"><div class="tDiv">{$lang.deposit} </div></th>
                                     <th width="6%"><div class="tDiv">{$lang.restrict_amount}</div></th>
                                     <th width="6%"><div class="tDiv">{$lang.valid_goods}</div></th>
                                     <th width="6%"><div class="tDiv">{$lang.valid_order}</div></th>
                                     <th width="6%"><div class="tDiv">{$lang.current_price}</div></th>
                                     <th width="6%"><div class="tDiv">{$lang.adopt_status}</div></th>
-                                    <th width="16%" class="handle">{$lang.handler}</th>
+                                    <th width="20%" class="handle">{$lang.handler}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -112,7 +113,7 @@
                                     </td>
                                     <td><div class="tDiv">{if $group_buy.user_name}<font class="red">{$group_buy.user_name}</font>{else}{$lang.self}{/if}</div></td>
                                     <td><div class="tDiv">{$group_buy.end_time}</div></td>
-                                    
+                                    <td><div class="tDiv">{$group_buy.ppj_no}</div></td>
                                     <td><div class="tDiv"><span onclick="listTable.edit(this, 'edit_deposit', {$group_buy.ppj_id})">{$group_buy.ppj_margin_fee}</span></div></td>
 									
                                     <td><div class="tDiv"><span onclick="listTable.edit(this, 'edit_restrict_amount', {$group_buy.ppj_id})">{$group_buy.goods_count}</span></div></td>
@@ -148,8 +149,8 @@
                             </tbody>
                             <tfoot>
                             	<tr>
-									<td colspan="12">
-                                        <div class="tDiv">
+									<td colspan="12" class="border:1px solid #000;">
+                                        <div class="tDiv" >
                                             {if $filter.seller_list eq 1}
 											<div class="tfoot_btninfo">
 												<input type="hidden" value="batch" name="act">

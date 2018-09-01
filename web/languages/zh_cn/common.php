@@ -1544,6 +1544,9 @@ $_LANG['no_zc_goods'] = "暂无众筹商品";
 
 $_LANG['wholesale_order_notic'] = '主人，您现在还没有采购订单哟！';
 
+
+
+
 /* lbi文件end */
 $_LANG['With_a_gift'] = "满赠";
 $_LANG['Full_reduction'] = "满减";

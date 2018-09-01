@@ -53,6 +53,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ade0f6', end
 .list-tb-div .btn-tb{ display: inline-block; height: 28px; line-height: 28px; border-radius: 3px; font-weight: 700; text-align: center; padding: 0 12px; font-size: 12px; cursor: pointer; box-sizing:border-box; }
 .list-tb-div .btn-tb-blue{color: #fff; background: #66B6FF; }
 .list-tb-div .btn-tb-blue:hover{ background: #5caef9; }
+.list-tb-div .btn-tb-red{color: #fff; background: #ec5051; }
+.list-tb-div .btn-tb-red:hover{ background: #ff0000; }
 .list-tb-div .btn-tb-default{ background-color: #fff; border: 1px solid #dcdcdc; color: #3c3c3c; }
 .list-tb-div .btn-tb-default:hover{ border-color: #ff1d00; color: #ff1d00;}
 
