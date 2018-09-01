@@ -1,5 +1,20 @@
 <?php if ($this->_var['ad_child']): ?>
 <div class="need-channel clearfix" id="h-need">
+<<<<<<< HEAD
+<?php $_from = $this->_var['ad_child']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'ad_0_56071900_1535422894');$this->_foreach['noad'] = array('total' => count($_from), 'iteration' => 0);
+if ($this->_foreach['noad']['total'] > 0):
+    foreach ($_from AS $this->_var['ad_0_56071900_1535422894']):
+        $this->_foreach['noad']['iteration']++;
+?>
+<?php if ($this->_foreach['noad']['iteration'] < 6): ?>
+<div class="channel-column" style="background:url(<?php echo $this->_var['ad_0_56071900_1535422894']['ad_bg_code']; ?>) no-repeat;">
+	<div class="column-title">
+		<h3><?php echo $this->_var['ad_0_56071900_1535422894']['b_title']; ?></h3>
+		<p><?php echo $this->_var['ad_0_56071900_1535422894']['s_title']; ?></p>
+	</div>
+	<div class="column-img"><img src="<?php echo $this->_var['ad_0_56071900_1535422894']['ad_code']; ?>"></div>
+	<a href="<?php echo $this->_var['ad_0_56071900_1535422894']['ad_link']; ?>" target="_blank" class="column-btn"><?php echo $this->_var['lang']['go_see']; ?></a>
+=======
 <?php $_from = $this->_var['ad_child']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'ad_0_41601500_1535416338');$this->_foreach['noad'] = array('total' => count($_from), 'iteration' => 0);
 if ($this->_foreach['noad']['total'] > 0):
     foreach ($_from AS $this->_var['ad_0_41601500_1535416338']):
@@ -13,6 +28,7 @@ if ($this->_foreach['noad']['total'] > 0):
 	</div>
 	<div class="column-img"><img src="<?php echo $this->_var['ad_0_41601500_1535416338']['ad_code']; ?>"></div>
 	<a href="<?php echo $this->_var['ad_0_41601500_1535416338']['ad_link']; ?>" target="_blank" class="column-btn"><?php echo $this->_var['lang']['go_see']; ?></a>
+>>>>>>> 94191bd925c8b9e84f91a6fed89f388f081bea79
 </div>
 <?php endif; ?>
 <?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
