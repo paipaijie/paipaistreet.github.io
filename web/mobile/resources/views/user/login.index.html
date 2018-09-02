@@ -62,11 +62,10 @@
             tipSweep: true,
             ajaxPost: true,
             callback: function (data) {
-                // alert("index/iundex.php");
-                // exit;
                 // {"info":"demo info","status":"y"}
                 if (data.status === 'y') {
-                    window.location.href = json_decode({$_SERVER['HTTP_HOST']})"/mobile/index.php";
+                    window.location.href = data.url;
+                    //window.location.href = "http://www.paipaistreet.com/mobile/index.php";
                 } else {
                     d_messages(data.info);
                 }

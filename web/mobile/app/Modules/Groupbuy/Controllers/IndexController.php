@@ -22,7 +22,128 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 		$this->area_id = $this->area_info['region_id'];
 	}
 
+	//显示进行中的拍拍活动
+	public function actionUnderway(){
+		$this->display();
+	}
+				
+	//显示未开始的方法
+	public function actionNotstarted(){
 
+		$this->display();
+	}
+
+	//参加报名的方法
+	public function actionBaoming(){
+
+		$id = $_SESSION['user_id'];
+		$ppj_id = $_POST['ppj_id'];
+		//  $ppj_id = 109;
+		$seller_max_fee = $_POST['max'];
+		//  $seller_max_fee = 1000;
+		$seller_min_fee = $_POST['min'];
+		//  $seller_min_fee = 1100;
+		//echo json_encode(array('a'=>$seller_max_fee,'b'=>$seller_min_fee));
+
+		// echo json_encode($seller_max_fee);
+		
+		$time = time();
+		$arr = array();
+
+		//查询拍拍街的期数和商品id
+		$sql1 = "select * from dsc_paipai_list where ppj_id = {$ppj_id}";
+		$date = $GLOBALS['db']->query($sql1);
+		
+		//查询有没有匹配的优惠券
+		$sql = "select * from dsc_paipai_seller where  usestaus = 0 and goods_id = {$date[0]['goods_id']} and user_id = {$id}";
+		$result = $GLOBALS['db']->query($sql);
+		
+		$success = 0;
+		//判断是否有拍拍券
+		if($result == 0){
+			echo 3;   //返回提示没有券
+			exit;
+		}else{//不为0  开始匹配价格
+			foreach($result as $key=>$val){
+				if($val['ppj_no'] == 0){
+					if($val['endtime'] > $time){
+						//查询goods商品的最低价格
+						$sql2 = "select * from dsc_goods where goods_id = {$date[0]['goods_id']} ";
+						$result1 = $GLOBALS['db']->query($sql2);
+						
+						// var_dump($result1[0]['cost_price']);
+						// var_dump($result1);exit;
+						//判断价格是否合理
+						if($seller_min_fee > $result1[0]['cost_price'] && $seller_max_fee < $result1[0]['shop_price']){
+								$arr['ppj_id']=$ppj_id;
+								$arr['user_id']=$id;
+								$arr['ppj_no']=$date[0]['ppj_no'];
+								$arr['seller_max_fee']=$seller_max_fee;
+								$arr['seller_min_fee']=$seller_min_fee;
+								$arr['ls_ok']=0;
+								$arr['ls_staus']=0;
+								$arr['createtime']=$time;
+								//插入报名信息
+								$this->db->autoExecute($GLOBALS['ecs']->table('paipai_goods_sellers'), $arr, 'INSERT');
+								$success = $GLOBALS['db']->query($sql1);
+								if($success > 0){
+									echo 1;
+								}else{
+									echo 2;
+								}
+						}else{
+							echo 4;
+							exit;
+						}
+					}
+				}else if($val['ppj_no'] == $date[0]['ppj_no']){
+					if($val['endtime'] > $time){
+						//查询goods商品的最低价格
+						$sql2 = "select * from dsc_goods where goods_id = {$date[0]['goods_id']} ";
+						$result1 = $GLOBALS['db']->query($sql2);
+						
+						// var_dump($result1[0]['cost_price']);
+						// var_dump($result1);exit;
+						//判断价格是否合理
+						if($seller_min_fee > $result1[0]['cost_price'] && $seller_max_fee < $result1[0]['shop_price']){
+								$arr['ppj_id']=$ppj_id;
+								$arr['user_id']=$id;
+								$arr['ppj_no']=$date[0]['ppj_no'];
+								$arr['seller_max_fee']=$seller_max_fee;
+								$arr['seller_min_fee']=$seller_min_fee;
+								$arr['ls_ok']=0;
+								$arr['ls_staus']=0;
+								$arr['createtime']=$time;
+								//插入报名信息
+								$this->db->autoExecute($GLOBALS['ecs']->table('paipai_goods_sellers'), $arr, 'INSERT');
+								$success = $GLOBALS['db']->query($sql1);
+								if($success > 0){
+									echo 1;
+								}else{
+									echo 2;
+								}
+						}else{
+							echo 4;
+							exit;
+						}
+					}
+				}else{
+					echo 5;
+				}
+			}
+		}
+
+	}
+
+	//显示我报名的
+	public function actionSign()
+	{
+		$id = $_SESSION['user_id'];
+		$sql = "select * from dsc_paipai_goods_sellers where user_id = {$id}";
+		$arr = $GLOBALS['db']->query($sql);
+		exit(json_encode(array('aa' => $arr)));	//
+		$this->display();
+	}
 
 
 	public function actionIndex()
@@ -55,7 +176,8 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 				$page = $max_page;
 			}
 
-			$gb_list = paipai_buy_list($this->size, $page, $keywords, $this->sort, $this->order);
+			$gb_list = paipai_buy_add_list($this->size, $page, $keywords, $this->sort, $this->order);
+			// var_dump($gb_list);
 			
 			exit(json_encode(array('gb_list' => $gb_list, 'totalPage' => ceil($count / $this->size))));
 					
@@ -74,8 +196,6 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 		$this->assign('page_title', $page_title);		
 		$this->assign('keywords', $keywords);		
 		$this->assign('description', $description);		
-		
-				//var_dump($gb_list['is_end']);
 				
 		$this->display();
 	}
@@ -93,8 +213,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 		}
 		
 
-		$group_buy = paipai_buy_info($this->groupbuyid);
-		
+		$group_buy = paipai_buy_info($this->groupbuyid);	
 
 		if (empty($group_buy)) {
 			ecs_header("Location: ./\n");
@@ -102,6 +221,8 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 		}
 
 		$group_buy['gmt_end_date'] = $group_buy['end_date'];
+
+		
 		
 		$this->assign('group_buy', $group_buy);
 		
@@ -195,6 +316,18 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 		$this->assign('new_goods', $new_goods);
 		$this->assign('type', 0);
 		$goods['url'] = build_uri('goods', array('gid' => $this->goods_id), $goods['goods_name']);
+
+		$now = time();
+		
+		if($group_buy['end_date'] > $now && $group_buy['start_date'] < $now){
+			$goods['is_end'] = 1;
+		}else if($group_buy['start_date'] > $now){
+			$goods['is_end'] = 0;
+		}else{
+			$goods['is_end'] = 2;
+		}
+
+
 		$this->assign('goods', $goods);
 		$sql = 'SELECT * FROM {pre}goods_gallery WHERE goods_id = ' . $this->goods_id;
 		$goods_img = $this->db->query($sql);
@@ -260,6 +393,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 		$this->assign('keywords', $keywords);
 		$this->assign('description', $description);
 		$sql = 'SELECT ld.goods_desc FROM {pre}link_desc_goodsid AS dg, {pre}link_goods_desc AS ld WHERE dg.goods_id = ' . $this->goods_id . '  AND dg.d_id = ld.id AND ld.review_status > 2';
+
 		$link_desc = $this->db->getOne($sql);
 
 		if (!empty($goods['desc_mobile'])) {
