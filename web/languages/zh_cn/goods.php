@@ -138,6 +138,9 @@ $_LANG['more_parameters'] = "更多参数";
 $_LANG['comment_sunburn'] = "评论晒单";
 $_LANG['not_impression'] = "此商品还没有设置买家印象，陪我一起等下嘛";
 
+
+
+
 //扩展信息 by wu
 $_LANG['width'] = "宽度";
 $_LANG['height'] = "高度";
@@ -180,5 +183,7 @@ $_LANG['js_languages']['Already_buy_two'] = '件商品达到限购条件,无法�
 $_LANG['js_languages']['bid_prompt_error'] = '价格输入格式不正确！';
 $_LANG['js_languages']['mobile_error_goods'] = '&nbsp;&nbsp;手机格式不正确！';
 $_LANG['js_languages']['null_email_goods'] = '邮箱不能为空'; 
+
+
 
 ?>

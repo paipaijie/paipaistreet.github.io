@@ -668,4 +668,24 @@ $_LANG['store_info'] = '门店信息';
 $_LANG['this_order_return_no_continue'] = '此订单已确认为退换货订单，无法继续订单操作！';
 $_LANG['no_info_fill_express_number'] = '暂无信息,请填写快递单号';
 
+$_LANG['seller_sign_list'] = '卖方报名列表';
+$_LANG['buyer_bid_list'] = '买方出价列表';
+$_LANG['margin_pay_list'] = '保证金支付列表';
+$_LANG['match_success_list'] = '匹配成功列表';
+$_LANG['match_fail_list'] = '匹配失败列表';
+
+$_LANG['ppj_sign_id'] = "序号";
+$_LANG['ppj_user_name'] = "用户名";
+$_LANG['ppj_mobile_phone'] = "手机号";
+$_LANG['ppj_user_flag'] = "用户身份";
+$_LANG['ppj_sign_date'] = "报名时间";
+$_LANG['ppj_pai_id'] = "活动编号";
+$_LANG['ppj_pai_no'] = "期数";
+$_LANG['ppj_margin_no'] = "保证金金额";
+$_LANG['ppj_margin_pay_date'] = "支付时间";
+$_LANG['ppj_margin_status'] = "支付状态";
+$_LANG['ppj_margin_refund'] = "退款状态";
+$_LANG['ppj_bid_no'] = "出价金额";
+$_LANG['ppj_bid_date'] = "出价时间";
+
 ?>
