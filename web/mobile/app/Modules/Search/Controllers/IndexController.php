@@ -5,6 +5,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 {
 	public function actionIndex()
 	{
+		
 		$this->assign('page_title', L('search'));
 		$this->display();
 	}

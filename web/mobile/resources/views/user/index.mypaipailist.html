@@ -19,7 +19,7 @@
 						<li>
 							<div class="product-div">
                                <a href="<%goods.url%>">
-                               	
+									<%goods.url%>
                                	    <div class="group-bq-box"   <%if goods.is_end == 1%> style="display:none" <%else%>  style="display:block" <%/if%>>  <span>进行中</span> </div>
                                	    	
 								<img class="product-list-img" src="<%goods.goods_thumb%>" />
@@ -158,7 +158,7 @@
 		$("#autosale").click(function(){
         	
             layer.open({
-           	
+
                 content: '<h4 class="t-remark">预计出售价</h4>	<div class="div-num dis-box m-top08"><input class="box-flex" type="text" value=""  name="sellers_fee" id="sellers_fee" /> </div>至	<div class="div-num dis-box m-top08"><input class="box-flex" type="text" value=""  name="sellers_fee" id="sellers_fee" /> </div>',
                 btn: ['确定', '取消'],
                 shadeClose: false,
