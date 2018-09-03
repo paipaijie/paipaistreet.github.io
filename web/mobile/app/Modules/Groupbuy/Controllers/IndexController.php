@@ -141,7 +141,14 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 		$id = $_SESSION['user_id'];
 		$sql = "select * from dsc_paipai_goods_sellers where user_id = {$id}";
 		$arr = $GLOBALS['db']->query($sql);
-		exit(json_encode(array('aa' => $arr)));	//
+		$att = '';
+		foreach ($arr as $key => $value) {
+			# code...
+			$att = $value;
+		}
+		// var_dump($att);
+		$this->assign('att',$att);
+		var_dump(11);
 		$this->display();
 	}
 

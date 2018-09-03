@@ -36,16 +36,27 @@
                     <section class="swiper-slide swiper-no-swiping product-list j-product-list product-list-medium" data="1">
                         <ul>
                             <%each gb_list as list%>
-                            
+                            <%if list.is_end == 1 || list.is_end == 0%>
+                            <%if list.ppj_id == {$att['ppj_id']} && list.ppj_no == {$att['ppj_no']}%>
                             <li>
                                 <div class="product-div">
-                                    <div class="group-bq-box">  <span></span> </div>
+                                
+
+                                    <div class="group-bq-box"   <%if list.is_end == 1%> style="display:none" <%else%>  style="display:block" <%/if%>>  <span>进行中</span> </div>
+                                                                        
+                                    <a class="product-div-link" href="<%list.url%>"></a>
+                                    
+                                    <!--
+                                    	作者：xul
+                                    	时间：2018-08-06
+                                    	描述：已结束标识
+                                    -->
                                     <div class="group-img-box">
                                         <div class="group-over-box"
-                                        <%if list.is_end == 0%> style="display:block" <%else%>
+                                        <%if list.is_end == 2%> style="display:block" <%else%>
                                         style="display:none" <%/if%> >
                                         
-                                        <div><p class="group-cont-box">未开始</p></div>
+                                        <div><p class="group-cont-box">已结束</p></div>
                                     </div>   
                                   <a href="<%list.url%>">  <img class="product-list-img" src="<%list.goods_thumb%>"></a>                                
                                 </div>
@@ -60,17 +71,22 @@
                                     <p><span class="p-price t-first "><%#list.price%><small>
                                     	
                                         <del><%#list.market_price%></del>
+                                        
                                     </small></span></p>
                                     
                                     
-                                    <p class="ect-button-more ect-button-more-dete n-br-5" style="width:150px;margin-left:84px;margin-top:-36px;">
-                                        <span style="color: red;" class="btn-default-new br-5 min-btn" id="autosale">立 即 报 名</span>  
-                                    </p>
+                                    <div class="group-right-box" style="display:block"><span class="group-cont"><%if list.formated_end_date == 1%><%else%>剩余<%/if%></span>
+                                    	
+                                        <span class="group-num-box" onload=""><%if list.formated_end_date == 1%><%else%><%list.formated_end_date%><%/if%></span>
+                                        
+                                    </div>
                                     
+                                    <a href="javascript:void(0)" class="icon-flow-cart fr j-goods-attr"><i class="iconfont icon-gouwuche"></i></a>
                                 </div>
                                 
                             </li>
-                            
+                            <%/if%>
+                            <%/if%>
                             <%/each%>
                             
                         </ul>
@@ -101,9 +117,59 @@
       
     var infinite = $('.article_info').infinite({url: url, template: 'j-product'});
     
+       // alert(infinite.length);
+    //搜
+    $(".btn-submit").click(function (){
+        keyword = $("input[name=infokeyword]").val();
+        if (keyword ||typeof(keyword) == "undefined")
+        {
+            infinite.onload('keyword='+keyword);
+        }else{
+            d_messages('请输入搜索关键字');
+        }
+    })
+    
+    
+    $(".product-sequence a").on('click', function(e) {
+        var sort = $(this).attr('sort');
+        var order = $(this).attr('order');
+        $(this).addClass("active").siblings().removeClass("active");
+        if (order == 'DESC') {
+            $(this).attr("order", "ASC");
+            $(this).removeClass("a-change");
+        } else {
+            $(this).attr("order", "DESC");
+            $(this).addClass("a-change");
+        }
+        infinite.onload('sort=' + sort + '&order=' + order);
+    })
+    
+    
 </script>
 
 
-
+<script>
+    /*切换*/
+    var tabsSwiper = new Swiper('#j-tab-con', {
+        speed: 0,
+        noSwiping: true,
+        autoHeight: true
+    })
+    
+    
+    
+    $(".j-tab-title li").on('touchstart mousedown', function (e) {
+        e.preventDefault()
+        $(".j-tab-title .active").removeClass('active')
+        $(this).addClass('active')
+        tabsSwiper.slideTo($(this).index())
+    })
+    
+    
+    $(".j-tab-title li").click(function (e) {
+        e.preventDefault()
+    })
+    
+</script>
 
 {include file="page_footer"}
