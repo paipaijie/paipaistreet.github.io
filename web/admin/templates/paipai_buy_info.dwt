@@ -115,7 +115,6 @@
 												<div class="form_prompt"></div>
 											</div>
 										</div>-->
-<<<<<<< Updated upstream
 
 										<!--{保证金}-->
 										<div class="item">
@@ -126,7 +125,6 @@
 												<div class="form_prompt"></div>
 											</div>
 										</div>
-=======
 										
 										<!-- <div class="item">
 											<div class="label">{$lang.label_deposit}</div>
@@ -136,17 +134,6 @@
 											</div>
 										</div> -->
 
-										<div class="item">
-	                                        <div class="label">{$lang.require_field}{$lang.label_deposit}</div>
-	                                        <div class="label_value">
-												<input type="text" name="ppl_margin_fee" id="ppl_margin_fee" class="text" value="{$group_buy.ppj_margin_fee|default:0}" autocomplete="off" />
-												<div class="notic">{$lang.notice_restrict_baozhenngjin}</div>
-												<div class="form_prompt"></div>
-	                                        </div>
-	                                    </div>
-										
-										
->>>>>>> Stashed changes
 										<div class="item">
 											<div class="label">{$lang.require_field}起拍价：</div>
 											<div class="label_value">
@@ -315,13 +302,13 @@
 											<div class="label">&nbsp;</div>
 											
 											<div class="label_value info_btn">
-												
+												{if $group_buy.ppj_staus eq 1 OR  $group_buy.ppj_staus eq 0  }
 												<input name="act_id" type="hidden" id="act_id" value="{$group_buy.ppj_id}" id="submitBtn">
 												
 												<input type="submit" name="submit" value="{$lang.button_submit}" class="button" />
 												
 												<input type="reset" value="{$lang.button_reset}" class="button button_reset" /> 
-												
+												{/if}
 												{if $group_buy.ppj_staus eq 1}
 													<input type="submit" name="finish" value="{$lang.button_finish}" class="button" onclick="return confirm('{$lang.notice_finish}'" id="{$group_buy.ppj_id}")" /><!--结束活动--> 
 												{elseif $group_buy.ppj_staus eq 2}

@@ -27,12 +27,12 @@
 					<div class="common-content">
 
 						<div class="mian-info">
-
+							
 							<form method="post" action="paipai_buy.php?act=insert_update" name="theForm" id="group_buy_form">
 
 								<div class="switch_info">
 									<!--产品搜索start  -->
-									<?php if (! $this->_var['group_buy']['status']): ?>
+									<?php if (! $this->_var['group_buy']['ppj_staus']): ?>
 
 									<div class="goods_search_div bor_bt_das">
 
@@ -64,7 +64,7 @@
 
 										<input type="hidden" name="ru_id" value="<?php echo $this->_var['ru_id']; ?>" />
 										
-										<input type="text" name="keyword" class="text w150" placeholder=<?php echo $this->_var['lang']['input_keywords']; ?> data-filter="keyword" autocomplete="off" />
+										<input type="text" name="keyword"  class="text w150" placeholder=<?php echo $this->_var['lang']['input_keywords']; ?> data-filter="keyword" autocomplete="off" />
 										
 	<a href="javascript:void(0);" class="btn btn30" onclick="searchGoods()"><i class="icon icon-search"></i><?php echo $this->_var['lang']['search_word']; ?></a>
 									</div>
@@ -84,7 +84,7 @@
 												
 												<div id="goods_id" class="imitate_select select_w320">
 													<div class="cite"><?php if ($this->_var['group_buy']['ppj_id']): ?><?php echo $this->_var['group_buy']['ppj_name']; ?><?php else: ?><?php echo $this->_var['lang']['please_select']; ?><?php endif; ?></div>
-													<?php if (! $this->_var['group_buy']['staus']): ?>
+													<?php if (! $this->_var['group_buy']['ppj_staus']): ?>
 													<ul>
 														<li class="li_not"><?php echo $this->_var['lang']['please_search_goods']; ?></li>
 													</ul>
@@ -97,12 +97,11 @@
 											
 										</div>
 										<!--字段1end  -->
-										
-										
+
 										<div class="item">
 											<div class="label"><?php echo $this->_var['lang']['require_field']; ?><?php echo $this->_var['lang']['label_start_end_date']; ?></div>
 											<div class="label_value text_time">
-												<input type="text" class="text mr0" name="start_time" <?php if (! $this->_var['group_buy']['status']): ?>id="start_time"<?php endif; ?> value="<?php echo $this->_var['group_buy']['start_time']; ?>" autocomplete="off" readonly>
+												<input type="text" class="text mr0" name="start_time" <?php if (! $this->_var['group_buy']['ppj_staus']): ?>id="start_time"<?php endif; ?> value="<?php echo $this->_var['group_buy']['start_time']; ?>" autocomplete="off" readonly>
 												<span class="bolang">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
 												<input type="text" class="text" name="end_time" id="end_time" value="<?php echo $this->_var['group_buy']['end_time']; ?>" autocomplete="off" readonly>
 												<div class="notic"><?php echo $this->_var['lang']['notice_start_time']; ?></div>
@@ -116,6 +115,16 @@
 												<div class="form_prompt"></div>
 											</div>
 										</div>-->
+
+										<!--{保证金}-->
+										<div class="item">
+											<div class="label"><?php echo $this->_var['lang']['require_field']; ?><?php echo $this->_var['lang']['label_deposit']; ?></div>   
+											<div class="label_value">
+												<input name="ppl_margin_fee" type="text" id="ppl_margin_fee" value="<?php echo $this->_var['group_buy']['ppj_margin_fee']; ?>" class="text" autocomplete="off"/>
+												<div class="notic"><?php echo $this->_var['lang']['notice_goods_deposit']; ?></div>
+												<div class="form_prompt"></div>
+											</div>
+										</div>
 										
 										<!-- <div class="item">
 											<div class="label"><?php echo $this->_var['lang']['label_deposit']; ?></div>
@@ -126,26 +135,19 @@
 										</div> -->
 
 										<div class="item">
-	                                        <div class="label"><?php echo $this->_var['lang']['require_field']; ?><?php echo $this->_var['lang']['label_deposit']; ?></div>
-	                                        <div class="label_value">
-												<input type="text" name="ppl_margin_fee" id="ppl_margin_fee" class="text" value="<?php echo empty($this->_var['group_buy']['ppj_margin_fee']) ? '0' : $this->_var['group_buy']['ppj_margin_fee']; ?>" autocomplete="off" />
-												<div class="notic"><?php echo $this->_var['lang']['notice_restrict_baozhenngjin']; ?></div>
-												<div class="form_prompt"></div>
-	                                        </div>
-	                                    </div>
-										
-										
-										<div class="item">
-											<div class="label">起拍价</div>
-											<div class="label_value"><input name="ppj_start_fee" type="text" id="ppj_start_fee" value="<?php echo empty($this->_var['group_buy']['ppj_start_fee']) ? '0' : $this->_var['group_buy']['ppj_start_fee']; ?>" class="text" autocomplete="off" <?php if ($this->_var['group_buy']['status']): ?>readonly<?php endif; ?>/>
+											<div class="label"><?php echo $this->_var['lang']['require_field']; ?>起拍价：</div>
+											<div class="label_value">
+												<input name="ppj_start_fee" type="text" id="ppj_start_fee" value="<?php echo $this->_var['group_buy']['ppj_start_fee']; ?>" class="text" autocomplete="off" <?php if ($this->_var['group_buy']['ppj_staus']): ?>readonly<?php endif; ?>/>
+												<?php if ($this->_var['group_buy']['ppj_staus']): ?><div class="notic" style="color:red"><?php echo $this->_var['lang']['deposit_not_edit']; ?></div><?php endif; ?>
 												<div class="form_prompt"></div>
 											</div>
 										</div>
+
 										
 										
 										<div class="item">
-											<div class="label">最低成交价</div>
-											<div class="label_value"><input name="ppj_buy_fee" type="text" id="ppj_buy_fee" value="<?php echo empty($this->_var['group_buy']['ppj_buy_fee']) ? '0' : $this->_var['group_buy']['ppj_buy_fee']; ?>" class="text" autocomplete="off" <?php if ($this->_var['group_buy']['status']): ?>readonly<?php endif; ?>/>
+											<div class="label">最低成交价：</div>
+											<div class="label_value"><input name="ppj_buy_fee" type="text" id="ppj_buy_fee" value="<?php echo empty($this->_var['group_buy']['ppj_buy_fee']) ? '0' : $this->_var['group_buy']['ppj_buy_fee']; ?>" class="text" autocomplete="off"/>
 												<div class="form_prompt"></div>
 											</div>
 										</div>
@@ -170,7 +172,7 @@
 										</div>
 										
 										<div class="item">
-											<div class="label">当前价格</div>
+											<div class="label">当前价格：</div>
 											<div class="label_value">
 											<div class="" id="ppj_now_fee"><?php echo empty($this->_var['group_buy']['ppj_now_fee']) ? '0' : $this->_var['group_buy']['ppj_now_fee']; ?></div>									
 											<div class="form_prompt">产品当前已拍到的价格</div>
@@ -179,9 +181,13 @@
 										
 										<div class="item">
 											<div class="label"><?php echo $this->_var['lang']['lab_market_price']; ?></div>
-											<div class="label_value" id="market_price"><?php echo empty($this->_var['group_buy']['market_price']) ? '0' : $this->_var['group_buy']['market_price']; ?> 拍拍的价格不得高于此价格</div>											
+											<div class="label_value" id="market_price"><?php echo empty($this->_var['group_buy']['market_price']) ? '0' : $this->_var['group_buy']['market_price']; ?> 拍拍的价格不得高于此价格</div>	
+																					
 										</div>
-										
+										<div class="item">
+										    <div class="label"><?php echo $this->_var['lang']['lab_cost_price']; ?></div>
+											<div class="label_value" id="cost_price"><?php echo empty($this->_var['group_buy']['cost_price']) ? '0' : $this->_var['group_buy']['cost_price']; ?> 保证金必须大于批发价</div>	
+										</div>
 										<!--
                                         	作者：offline
                                         	时间：2018-08-02
@@ -218,18 +224,18 @@
 										
 										
 										<div class="item">
-											<div class="label">交易匹配成功支付时间</div>
+											<div class="label">交易匹配成功支付时间：</div>
 											<div class="label_value">
-												<input type="text" name="ppj_startpay_time" value="<?php echo empty($this->_var['group_buy']['ppj_startpay_time']) ? '0' : $this->_var['group_buy']['ppj_startpay_time']; ?>" class="text" autocomplete="off" />
+												<input type="text" name="ppj_startpay_time" value="<?php echo empty($this->_var['group_buy']['ppj_startpay_time']) ? '10' : $this->_var['group_buy']['ppj_startpay_time']; ?>" class="text" autocomplete="off" />
 												<div class="notic">分钟为单位</div>
 												<div class="form_prompt"></div>
 											</div>
 										</div>
 										
 										<div class="item">
-											<div class="label">活动结束后支付时间</div>
+											<div class="label">活动结束后支付时间：</div>
 											<div class="label_value">
-												<input type="text" name="ppj_endtapy_time" value="<?php echo empty($this->_var['group_buy']['ppj_endtapy_time']) ? '0' : $this->_var['group_buy']['ppj_endtapy_time']; ?>" class="text" autocomplete="off" />
+												<input type="text" name="ppj_endtapy_time" value="<?php echo empty($this->_var['group_buy']['ppj_endtapy_time']) ? '10' : $this->_var['group_buy']['ppj_endtapy_time']; ?>" class="text" autocomplete="off" />
 												<div class="notic">分钟为单位</div>
 												<div class="form_prompt"></div>
 											</div>
@@ -300,13 +306,13 @@
 											<div class="label">&nbsp;</div>
 											
 											<div class="label_value info_btn">
-												
+												<?php if ($this->_var['group_buy']['ppj_staus'] == 1 || $this->_var['group_buy']['ppj_staus'] == 0): ?>
 												<input name="act_id" type="hidden" id="act_id" value="<?php echo $this->_var['group_buy']['ppj_id']; ?>" id="submitBtn">
 												
 												<input type="submit" name="submit" value="<?php echo $this->_var['lang']['button_submit']; ?>" class="button" />
 												
 												<input type="reset" value="<?php echo $this->_var['lang']['button_reset']; ?>" class="button button_reset" /> 
-												
+												<?php endif; ?>
 												<?php if ($this->_var['group_buy']['ppj_staus'] == 1): ?>
 													<input type="submit" name="finish" value="<?php echo $this->_var['lang']['button_finish']; ?>" class="button" onclick="return confirm('<?php echo $this->_var['lang']['notice_finish']; ?>'" id="<?php echo $this->_var['group_buy']['ppj_id']; ?>")" /><!--结束活动--> 
 												<?php elseif ($this->_var['group_buy']['ppj_staus'] == 2): ?>
@@ -361,9 +367,16 @@
                         required : true
                     },
                     ppl_margin_fee:{
+<<<<<<< Updated upstream
+                        required : true
+                    },
+                    ppj_start_fee:{
+                    	required : true
+=======
                         //number : true
                         required : true,
                         min : 1
+>>>>>>> Stashed changes
                     },
                     restrict_amount:{
                         digits : true
@@ -389,10 +402,18 @@
                     goods_id:{
                         required : '<i class="icon icon-exclamation-sign"></i>'+error_goods_null
                     },
+<<<<<<< Updated upstream
+                    ppl_margin_fee:{
+						required : '<i class="icon icon-exclamation-sign"></i>'+error_goods_deposit
+                    },
+                    ppj_start_fee:{
+                    	required : '<i class="icon icon-exclamation-sign"></i>'+goods_start_fee
+=======
                     deposit:{
                         //number : '<i class="icon icon-exclamation-sign"></i>'+error_deposit
 						required : '<i class="icon icon-exclamation-sign"></i>'+error_goods_null
 
+>>>>>>> Stashed changes
                     },
                     restrict_amount:{
                         digits : '<i class="icon icon-exclamation-sign"></i>'+error_restrict_amount,
@@ -443,13 +464,13 @@
         //团购商品市场价格
         function groupGoods(val){
             var filter = new Object;
-            filter.goods_id = val;
-            
+            filter.goods_id = val;        
             Ajax.call('group_buy.php?is_ajax=1&act=group_goods', filter, groupGoodsResponse, 'GET', 'JSON');
         }
         
         function groupGoodsResponse(result){
             $('#market_price').html(result.content.marketPrice);
+            $('#cost_price').html(result.content.cost_price);
         }
     
         /**

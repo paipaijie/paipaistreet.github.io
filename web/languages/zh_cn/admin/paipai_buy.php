@@ -85,11 +85,11 @@ $_LANG['error_goods_not_end'] = '您选择的商品目前有一个拍拍结束�
 
 $_LANG['js_languages']['error_goods_null'] = '请选择拍拍商品！';
 $_LANG['js_languages']['error_deposit'] = '您输入的保证金不是数字！';
-<<<<<<< Updated upstream
+
 $_LANG['js_languages']['error_goods_deposit'] = '保证金必须大于批发价！';
-=======
+
 $_LANG['js_languages']['error_deposit_null'] = '您输入的！';
->>>>>>> Stashed changes
+
 $_LANG['js_languages']['error_restrict_amount'] = '您输入的限购数量不是整数！';
 $_LANG['js_languages']['error_gift_integral'] = '您输入的赠送积分数不是整数！';
 $_LANG['js_languages']['search_is_null'] = '没有搜索到任何商品，请重新搜索';

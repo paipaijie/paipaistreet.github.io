@@ -22,7 +22,7 @@
                     <li <?php if ($this->_var['form_action'] == 'account_log'): ?>class="curr"<?php endif; ?>><a href="account_log.php?act=list&user_id=<?php echo $this->_var['user_id']; ?>"><?php echo $this->_var['lang']['account_details']; ?></a></li>
                 </ul>
             </div>
-            <?php endif; ?>
+            <?php endif; ?>       
             <div class="explanation" id="explanation">
                 <div class="ex_tit"><i class="sc_icon"></i><h4><?php echo $this->_var['lang']['operating_hints']; ?></h4><span id="explanationZoom" title="<?php echo $this->_var['lang']['fold_tips']; ?>"></span></div>
                 <ul>
@@ -34,6 +34,17 @@
             <div class="flexilist mt30"  id="listDiv">
 				<?php endif; ?>
                 <div class="common-head order-coomon-head">
+
+                    <!--{拍拍街预订单}-->
+
+                    <div class="ppj_order">
+                        <a href="order.php?act=ppj&list_type=11<?php if ($this->_var['user_id']): ?>&user_id=<?php echo $this->_var['user_id']; ?><?php endif; ?>"  <?php if ($this->_var['list_type'] == '11'): ?>class="current"<?php endif; ?>> <?php echo $this->_var['lang']['seller_sign_list']; ?></a>
+                        <a href="order.php?act=ppj&list_type=12<?php if ($this->_var['user_id']): ?>&user_id=<?php echo $this->_var['user_id']; ?><?php endif; ?>"  <?php if ($this->_var['list_type'] == '12'): ?>class="current"<?php endif; ?>> <?php echo $this->_var['lang']['buyer_bid_list']; ?></a>
+                        <a href="order.php?act=ppj&list_type=13<?php if ($this->_var['user_id']): ?>&user_id=<?php echo $this->_var['user_id']; ?><?php endif; ?>"  <?php if ($this->_var['list_type'] == '13'): ?>class="current"<?php endif; ?>> <?php echo $this->_var['lang']['margin_pay_list']; ?></a>
+                        <a href="order.php?act=ppj&list_type=14<?php if ($this->_var['user_id']): ?>&user_id=<?php echo $this->_var['user_id']; ?><?php endif; ?>"  <?php if ($this->_var['list_type'] == '14'): ?>class="current"<?php endif; ?>> <?php echo $this->_var['lang']['match_success_list']; ?></a>
+                        <a href="order.php?act=ppj&list_type=15<?php if ($this->_var['user_id']): ?>&user_id=<?php echo $this->_var['user_id']; ?><?php endif; ?>"  <?php if ($this->_var['list_type'] == '15'): ?>class="current"<?php endif; ?>> <?php echo $this->_var['lang']['match_fail_list']; ?></a>
+                    </div>
+
                 	<div class="order_state_tab">
                         <a href="order.php?act=list<?php echo $this->_var['seller_list']; ?>&serch_type=-1<?php if ($this->_var['user_id']): ?>&user_id=<?php echo $this->_var['user_id']; ?><?php endif; ?>" <?php if ($this->_var['serch_type'] == '-1'): ?>class="current"<?php endif; ?>><?php echo $this->_var['lang']['all_order']; ?><?php if ($this->_var['serch_type'] == '-1'): ?><em>(<?php echo $this->_var['filter']['record_count']; ?>)</em><?php endif; ?></a>
                         <a href="order.php?act=list<?php echo $this->_var['seller_list']; ?>&serch_type=0<?php if ($this->_var['user_id']): ?>&user_id=<?php echo $this->_var['user_id']; ?><?php endif; ?>" <?php if ($this->_var['serch_type'] == '0'): ?>class="current"<?php endif; ?>><?php echo $this->_var['lang']['order_status_01']; ?><?php if ($this->_var['serch_type'] == '0'): ?><em>(<?php echo $this->_var['filter']['record_count']; ?>)</em><?php endif; ?></a>
@@ -58,17 +69,393 @@
                             <input type="submit" class="btn" name="secrch_btn" ectype="secrch_btn" value="" />
                         </div>
                         </form>
-                    </div>
-                        
-                    <div class="common-head-right">
+                    </div>        
+                    <div class="common-head-right"    <?php if ($this->_var['list_type'] > 10): ?>style="display:none" <?php endif; ?> >
                         <div class="fbutton"><a href="<?php echo $this->_var['action_link']['href']; ?><?php echo $this->_var['seller_list']; ?>"><div title="<?php echo $this->_var['action_link']['text']; ?>"><span><i class="icon icon-search"></i><?php echo $this->_var['action_link']['text']; ?></span></div></a></div>
 						<div class="fbutton"><div class="merge" title="<?php echo $this->_var['lang']['merge_order']; ?>"><span><i class="icon icon-copy"></i><?php echo $this->_var['lang']['merge_order']; ?></span></div></div>
 						<div class="fbutton"><a href="javascript:download_orderlist();"><div class="csv" title="<?php echo $this->_var['lang']['11_order_export']; ?>"><span><i class="icon icon-download-alt"></i><?php echo $this->_var['lang']['11_order_export']; ?></span></div></a></div>
                     </div>
+                
                 </div>
                 <div class="common-content">
+
                 <form method="post" action="order.php?act=operate" name="listForm" onsubmit="return check()">
                     <div class="list-div list-tb-div" >
+                    <?php if ($this->_var['list_type'] > 10): ?>
+                         <table cellpadding="0" cellspacing="0" border="0">
+                            <thead>
+                                <tr>
+                                <?php if ($this->_var['list_type'] == 14 || $this->_var['list_type'] == 15): ?>
+                                    <th width="25%"><div class="tDiv"><?php echo $this->_var['lang']['order_sn']; ?></div></th>
+                                    <th width="6%"><div class="tDiv"><?php echo $this->_var['lang']['goods_price']; ?></div></th>
+                                    <th width="5%"><div class="tDiv"><?php echo $this->_var['lang']['goods_number']; ?></div></th>
+                                    <th width="6%"><div class="tDiv"><?php echo $this->_var['lang']['goods_steps_name']; ?></div></th>
+                                    <th width="7%"><div class="tDiv"><?php echo $this->_var['lang']['user_name']; ?></div></th>
+                                    <th width="16%"><div class="tDiv"><?php echo $this->_var['lang']['consignee']; ?></div></th>
+                                    <th width="12%"><div class="tDiv"><?php echo $this->_var['lang']['amount_label']; ?></div></th>
+                                    <th width="6%"><div class="tDiv"><?php echo $this->_var['lang']['all_status']; ?></div></th>
+                                <?php else: ?>
+                                    <th width="4%" ><div class="tDiv"><?php echo $this->_var['lang']['ppj_sign_id']; ?></div></th>
+                                    <th width="10%"><div class="tDiv"><?php echo $this->_var['lang']['ppj_user_name']; ?></div></th>
+                                    <th width="10%"><div class="tDiv"><?php echo $this->_var['lang']['ppj_mobile_phone']; ?></div></th>
+                                    <th width="10%"><div class="tDiv"><?php echo $this->_var['lang']['ppj_user_flag']; ?></div></th>
+                                    <?php if ($this->_var['list_type'] == 12): ?>
+                                    <th width="10%"><div class="tDiv"><?php echo $this->_var['lang']['ppj_bid_no']; ?></div></th>
+                                    <th width="10%"><div class="tDiv"><?php echo $this->_var['lang']['ppj_bid_date']; ?></div></th>
+                                    <?php elseif ($this->_var['list_type'] == 13): ?>    
+                                    <th width="10%"><div class="tDiv"><?php echo $this->_var['lang']['ppj_margin_no']; ?></div></th>
+                                    <th width="10%"><div class="tDiv"><?php echo $this->_var['lang']['ppj_margin_pay_date']; ?></div></th>
+                                    <th width="10%"><div class="tDiv"><?php echo $this->_var['lang']['ppj_margin_status']; ?></div></th>
+                                    <th width="10%"><div class="tDiv"><?php echo $this->_var['lang']['ppj_margin_refund']; ?></div></th>
+                                    <?php else: ?>
+                                    <th width="20%"><div class="tDiv"><?php echo $this->_var['lang']['ppj_sign_date']; ?></div></th>
+                                    <?php endif; ?>         
+                                <?php endif; ?>
+                                    <th width="10%"><div class="tDiv">操作</div></th>                                
+                                </tr>
+                            </thead>
+                        </table>
+                        <?php $_from = $this->_var['order_list']['orders']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('okey', 'order');if (count($_from)):
+    foreach ($_from AS $this->_var['okey'] => $this->_var['order']):
+?>
+                        <table cellpadding="0" cellspacing="0" border="0">
+                           <colgroup>
+                            <?php if ($this->_var['list_type'] == 14 || $this->_var['list_type'] == 15): ?>
+                                <col width="25%">
+                                <col width="6%">
+                                <col width="5%">
+                                <col width="6%">
+                                <col width="7%">
+                                <col width="16%">
+                                <col width="12%">
+                                <col width="6%">                            
+                            <?php else: ?>
+                                <col width="4%">
+                                <col width="10%">
+                                <col width="10%">
+                                <col width="10%">
+                                <?php if ($this->_var['list_type'] == 12): ?>
+                                    <col width="10%">
+                                    <col width="10%">
+                                <?php elseif ($this->_var['list_type'] == 13): ?>    
+                                    <col width="10%">
+                                    <col width="10%">
+                                    <col width="10%">
+                                    <col width="10%">
+                                <?php else: ?>
+                                    <col width="20%">
+                                <?php endif; ?>    
+                            <?php endif; ?>
+                                <col width="10%">
+                            </colgroup>
+
+                            <tbody>
+                                <?php if ($this->_var['list_type'] == 14 || $this->_var['list_type'] == 15): ?>          
+                                    <tr class="tr-order-sn">
+                                    <td colspan="10">
+                                        <div class="tDiv ml10">
+                                            <span class="sign<?php if ($this->_var['order']['chargeoff_status'] == 1 || $this->_var['order']['chargeoff_status'] == 2): ?> sign_bdl<?php endif; ?>" <?php if ($this->_var['order']['chargeoff_status'] == 1 || $this->_var['order']['chargeoff_status'] == 2): ?>rowspan="2"<?php endif; ?>>
+                                                <input type="checkbox" name="checkboxes[]" value="<?php echo $this->_var['order']['order_sn']; ?>" class="checkbox" id="checkbox_<?php echo $this->_var['order']['order_id']; ?>" /><label for="checkbox_<?php echo $this->_var['order']['order_id']; ?>" class="checkbox_stars"></label>
+                                            </span>
+                                            <span class="words"><?php echo $this->_var['lang']['order_sn']; ?>：<?php echo $this->_var['order']['order_sn']; ?></span>
+                                            <span class="words"><?php echo $this->_var['lang']['order_time']; ?>：<?php echo $this->_var['order']['short_order_time']; ?></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td-product">
+                                    <?php $_from = $this->_var['order']['goods_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'list');$this->_foreach['foo'] = array('total' => count($_from), 'iteration' => 0);
+if ($this->_foreach['foo']['total'] > 0):
+    foreach ($_from AS $this->_var['list']):
+        $this->_foreach['foo']['iteration']++;
+?>
+                                        <div class="tDiv relative tpinfo <?php if (($this->_foreach['foo']['iteration'] == $this->_foreach['foo']['total'])): ?>last<?php endif; ?>">
+                                            <div class="img"><img width="80" src="<?php echo $this->_var['list']['goods_thumb']; ?>" alt="" onmouseover="toolTip('<img src=<?php echo $this->_var['list']['goods_img']; ?>>')" onmouseout="toolTip()"></div>
+                                            <div class="product-info">
+                                                <div class="name mb5">
+                                                    <?php if ($this->_var['order']['oi_extension_code'] == "group_buy"): ?>
+                                                    <a href="../group_buy.php?act=view&id=<?php echo $this->_var['order']['extension_id']; ?>" target="_blank">
+                                                    <?php elseif ($this->_var['order']['oi_extension_code'] == "snatch"): ?>
+                                                    <a href="../snatch.php?id=<?php echo $this->_var['order']['extension_id']; ?>" target="_blank">
+                                                    <?php elseif ($this->_var['order']['oi_extension_code'] == "seckill"): ?>
+                                                    <a href="../seckill.php?id=<?php echo $this->_var['order']['extension_id']; ?>&act=view" target="_blank">
+                                                    <?php elseif ($this->_var['order']['oi_extension_code'] == "auction"): ?>
+                                                    <a href="../auction.php?id=<?php echo $this->_var['order']['extension_id']; ?>&act=view" target="_blank"> 
+                                                    <?php elseif ($this->_var['order']['oi_extension_code'] == "exchange_goods"): ?>
+                                                    <a href="../exchange.php?id=<?php echo $this->_var['order']['extension_id']; ?>&act=view" target="_blank">
+                                                    <?php elseif ($this->_var['order']['oi_extension_code'] == "presale"): ?>
+                                                    <a href="../presale.php?id=<?php echo $this->_var['order']['extension_id']; ?>&act=view" target="_blank">
+                                                    <?php elseif ($this->_var['order']['o_extension_code'] == "package_buy"): ?>
+                                                    <a href="../package.php" target="_blank">
+                                                    <?php else: ?>
+                                                        <a href="../goods.php?id=<?php echo $this->_var['list']['goods_id']; ?>" target="_blank">
+                                                    <?php endif; ?>
+                                                    <?php echo $this->_var['list']['goods_name']; ?>
+                                                    <?php if ($this->_var['list']['brand_name']): ?><span class="org">[ <?php echo $this->_var['list']['brand_name']; ?> ]</span><?php endif; ?>
+                                                    <?php if ($this->_var['list']['is_gift']): ?>
+                                                    <span class="red">
+                                                        <?php if ($this->_var['list']['goods_price'] > 0): ?>
+                                                            <?php echo $this->_var['lang']['remark_favourable']; ?>
+                                                        <?php else: ?>
+                                                            <?php echo $this->_var['lang']['remark_gift']; ?>
+                                                        <?php endif; ?>
+                                                    </span>
+                                                    <?php endif; ?>
+                                                    <?php if ($this->_var['list']['parent_id'] > 0): ?><span class="red"><?php echo $this->_var['lang']['remark_fittings']; ?></span><?php endif; ?>
+                                                    </a>
+                                                    
+                                                </div>
+                                                <?php if ($this->_var['list']['goods_attr']): ?><div class="attr"><span><?php echo $this->_var['list']['goods_attr']; ?></span></div><?php endif; ?>
+                                                <div><?php echo $this->_var['lang']['goods_sku']; ?>：<?php if ($this->_var['list']['product_sn']): ?><?php echo $this->_var['list']['product_sn']; ?><?php else: ?><?php echo $this->_var['list']['goods_sn']; ?><?php endif; ?><?php if ($this->_var['list']['trade_url']): ?><a href="<?php echo $this->_var['list']['trade_url']; ?>" target="_blank" class="ml5"><span class="org">[<?php echo $this->_var['lang']['trade_snapshot']; ?>]</span></a><?php endif; ?></div>
+                                                <div class="order_icon_items">
+                                                    <?php if ($this->_var['order']['is_stages'] == 1): ?><div class="order_icon order_icon_bt" title="<?php echo $this->_var['lang']['baitiao_order']; ?>"><?php echo $this->_var['lang']['baitiao_order']; ?></div><?php endif; ?>
+                                                    <?php if ($this->_var['order']['is_zc_order'] == 1): ?><div class="order_icon order_icon_zc" title="<?php echo $this->_var['lang']['zc_order']; ?>"><?php echo $this->_var['lang']['zc_order']; ?></div><?php endif; ?>
+                                                    <?php if ($this->_var['order']['is_store_order'] == 1): ?><div class="order_icon order_icon_so" title="<?php echo $this->_var['lang']['so_order']; ?>"><?php echo $this->_var['lang']['so_order']; ?></div><?php endif; ?>
+                                                    <?php if ($this->_var['order']['is_drp_order'] == 1): ?><div class="order_icon order_icon_fx" title="<?php echo $this->_var['lang']['fx_order']; ?>"><?php echo $this->_var['lang']['fx_order']; ?></div><?php endif; ?>
+                                                    <?php if ($this->_var['order']['o_extension_code'] == "group_buy"): ?>
+                                                        <div class="order_icon order_icon_tg" title="<?php echo $this->_var['lang']['group_buy']; ?>"><?php echo $this->_var['lang']['group_buy']; ?></div>
+                                                    <?php elseif ($this->_var['order']['o_extension_code'] == "exchange_goods"): ?>
+                                                        <div class="order_icon order_icon_jf" title="<?php echo $this->_var['lang']['exchange_goods']; ?>"><?php echo $this->_var['lang']['exchange_goods']; ?></div>
+                                                    <?php elseif ($this->_var['order']['o_extension_code'] == "auction"): ?>
+                                                        <div class="order_icon order_icon_pm" title="<?php echo $this->_var['lang']['auction']; ?>"><?php echo $this->_var['lang']['auction']; ?></div>
+                                                    <?php elseif ($this->_var['order']['o_extension_code'] == "snatch"): ?>
+                                                        <div class="order_icon order_icon_db" title="<?php echo $this->_var['lang']['snatch']; ?>"><?php echo $this->_var['lang']['snatch']; ?></div>
+                                                    <?php elseif ($this->_var['order']['o_extension_code'] == "presale"): ?>
+                                                        <div class="order_icon order_icon_ys" title="<?php echo $this->_var['lang']['presale']; ?>"><?php echo $this->_var['lang']['presale']; ?></div>  
+                                                    <?php elseif ($this->_var['order']['o_extension_code'] == "seckill"): ?>
+                                                        <div class="order_icon order_icon_ms" title="<?php echo $this->_var['lang']['seckill']; ?>"><?php echo $this->_var['lang']['seckill']; ?></div> 
+                                                    <?php elseif ($this->_var['order']['o_extension_code'] == "team_buy"): ?>
+                                                        <div class="order_icon order_icon_team" title="<?php echo $this->_var['lang']['team_order']; ?>"><?php echo $this->_var['lang']['team_order']; ?></div>
+                                                    <?php elseif ($this->_var['order']['o_extension_code'] == "bargain_buy"): ?>
+                                                        <div class="order_icon order_icon_bargain" title="<?php echo $this->_var['lang']['bargain_order']; ?>"><?php echo $this->_var['lang']['bargain_order']; ?></div>
+                                                    <?php elseif ($this->_var['order']['o_extension_code'] == "wholesale"): ?>    
+                                                        <div class="order_icon order_icon_wholesale" title="<?php echo $this->_var['lang']['wholesale_order']; ?>"><?php echo $this->_var['lang']['bargain_order']; ?></div>
+                                                    <?php endif; ?>
+                                                    <?php if ($this->_var['order']['iog_extension_code'] == "package_buy"): ?>
+                                                        <div class="order_icon order_icon_package" title="<?php echo $this->_var['lang']['package_order']; ?>"><?php echo $this->_var['lang']['package_order']; ?></div>
+                                                    <?php elseif ($this->_var['order']['iog_extension_code'] == 'virtual_card'): ?>
+                                                        <div class="order_icon order_icon_xn" title="<?php echo $this->_var['lang']['xn_order']; ?>"><?php echo $this->_var['lang']['xn_order']; ?></div>
+                                                    <?php endif; ?>
+                                                    <?php if ($this->_var['order']['is_stages'] == 0 && $this->_var['order']['is_zc_order'] == 0 && $this->_var['order']['is_store_order'] == 0 && $this->_var['order']['o_extension_code'] == '' && $this->_var['order']['iog_extension_code'] == ''): ?>
+                                                        <?php if ($this->_var['order']['iog_extension_codes']): ?>
+                                                        <?php $_from = $this->_var['order']['iog_extension_codes']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'extension_code');if (count($_from)):
+    foreach ($_from AS $this->_var['extension_code']):
+?>
+                                                            <?php if ($this->_var['extension_code'] == ''): ?>
+                                                            <div class="order_icon order_icon_pt" title="<?php echo $this->_var['lang']['pt_order']; ?>"><?php echo $this->_var['lang']['pt_order']; ?></div>
+                                                            <?php elseif ($this->_var['extension_code'] == 'virtual_card'): ?>
+                                                            <div class="order_icon order_icon_xn" title="<?php echo $this->_var['lang']['xn_order']; ?>"><?php echo $this->_var['lang']['xn_order']; ?></div>
+                                                            <?php endif; ?>
+                                                        <?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+                                                        <?php else: ?>
+                                                        <div class="order_icon order_icon_pt" title="<?php echo $this->_var['lang']['pt_order']; ?>"><?php echo $this->_var['lang']['pt_order']; ?></div>
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
+                                                    <?php if ($this->_var['order']['order_child'] != 0): ?>
+                                                        <div class="order_icon" title="<?php echo $this->_var['lang']['to_order_sn']; ?>"><?php echo $this->_var['lang']['to_order_sn']; ?></div>
+                                                    <?php endif; ?>
+                                                    <?php if (! $this->_var['order']['order_child'] > 0): ?>                                            
+                                                        <?php if ($this->_var['order']['main_order_id'] > 0): ?>
+                                                        <div class="order_icon order_icon_zdd"><?php echo $this->_var['lang']['sub_order_sn2']; ?></div>
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
+                                                    <?php if ($this->_var['list']['ret_id']): ?>
+                                                        <div class="order_icon order_icon_return" title="<?php echo $this->_var['lang']['return_order']; ?>"><?php echo $this->_var['lang']['return_order']; ?></div>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+                                    </td>
+                                    <td class="td-price" style="vertical-align: top;">
+                                    <?php $_from = $this->_var['order']['goods_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'list');$this->_foreach['foo'] = array('total' => count($_from), 'iteration' => 0);
+if ($this->_foreach['foo']['total'] > 0):
+    foreach ($_from AS $this->_var['list']):
+        $this->_foreach['foo']['iteration']++;
+?>
+                                        <div class="tDiv tpinfo <?php if (($this->_foreach['foo']['iteration'] == $this->_foreach['foo']['total'])): ?>last<?php endif; ?>"><?php echo $this->_var['list']['goods_price']; ?></div>
+                                    <?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+                                    </td>
+                                    <td class="td-number">
+                                    <?php $_from = $this->_var['order']['goods_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'list');$this->_foreach['foo'] = array('total' => count($_from), 'iteration' => 0);
+if ($this->_foreach['foo']['total'] > 0):
+    foreach ($_from AS $this->_var['list']):
+        $this->_foreach['foo']['iteration']++;
+?>
+                                        <div class="tDiv tpinfo <?php if (($this->_foreach['foo']['iteration'] == $this->_foreach['foo']['total'])): ?>last<?php endif; ?>"><?php echo $this->_var['list']['goods_number']; ?></div>
+                                    <?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+                                    </td>
+                                   
+                                    <td>
+                                        <div class="tDiv" style="height: 100px;">
+                                            <?php if ($this->_var['order']['order_child'] == 0): ?>
+                                            <?php if ($this->_var['order']['user_name']): ?>
+                                                <font><?php echo $this->_var['order']['user_name']; ?><?php if ($this->_var['order']['self_run']): ?>（<?php echo $this->_var['lang']['self_run']; ?>）<?php endif; ?></font>
+                                            <?php else: ?>
+                                                <font><?php echo $this->_var['lang']['self']; ?></font>
+                                            <?php endif; ?>
+                                            <?php else: ?>
+                                            <div class="exh">
+                                                <span class="blue3"><?php echo $this->_var['lang']['to_order_sn2']; ?></span>
+                                                <div class="exh_info">
+                                                    <i class="jt_r"></i>
+                                                    <?php if ($this->_var['order']['order_child'] > 0): ?>
+                                                        <font class="to_order_sn red">
+                                                            <?php echo $this->_var['lang']['to_order_sn3']; ?>
+                                                            <div id="div_order_<?php echo $this->_var['order']['order_id']; ?>" class="div_order_id">
+                                                            <?php $_from = $this->_var['order']['child_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'list');if (count($_from)):
+    foreach ($_from AS $this->_var['list']):
+?>
+                                                            <?php echo $this->_var['lang']['sub_order_sn']; ?>：<?php echo $this->_var['list']['order_sn']; ?>
+                                                            <br/> 
+                                                            <?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+                                                            </div>
+                                                        </font>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                    <div class="tDiv" style="height: 100px;">
+                                        <a href="users.php?act=edit&id=<?php echo $this->_var['order']['user_id']; ?>"><?php echo htmlspecialchars($this->_var['order']['buyer']); ?></a>
+                                    </div>
+                                    </td>
+                                    <td><div class="tDiv" style="height: 100px;text-align: left;"><?php echo htmlspecialchars($this->_var['order']['consignee']); ?><br><?php if ($this->_var['order']['mobile']): ?> TEL: <?php echo htmlspecialchars($this->_var['order']['mobile']); ?><?php endif; ?><br><?php echo $this->_var['order']['region']; ?> <?php echo htmlspecialchars($this->_var['order']['address']); ?></div></td>
+                                    <td>
+                                        <div class="tDiv" style="height: 100px;">
+                                            <span class="order-price"><?php echo $this->_var['order']['formated_total_fee_order']; ?></span>
+                                            <div class="price-shipping">(<?php if ($this->_var['order']['shipping_name']): ?><?php echo $this->_var['order']['shipping_name']; ?><?php else: ?><?php echo $this->_var['lang']['wu']; ?><?php endif; ?>：<?php echo $this->_var['order']['shipping_fee']; ?>)</div>
+                                            <div class="price-shipping">
+                                                <p><?php echo $this->_var['lang']['pay_name']; ?>：<?php if ($this->_var['order']['pay_name']): ?><?php echo $this->_var['order']['pay_name']; ?><?php else: ?><?php echo $this->_var['lang']['wu']; ?><?php endif; ?></p>
+                                                <p><?php echo $this->_var['lang']['referer']; ?>：<?php if ($this->_var['order']['referer'] == 'mobile'): ?>APP<?php elseif ($this->_var['order']['referer'] == 'touch'): ?><?php echo $this->_var['lang']['touch']; ?><?php elseif ($this->_var['order']['referer'] == 'wxapp'): ?>小程序<?php elseif ($this->_var['order']['referer'] == 'ecjia-cashdesk'): ?><?php echo $this->_var['lang']['cashdesk']; ?><?php else: ?>PC<?php endif; ?></p>
+                                            </div>        
+                                        </div>    
+                                    </td>
+                                    <td>
+                                        <div class="tDiv" style="height: 100px;">
+                                            <div><?php echo $this->_var['lang']['os'][$this->_var['order']['order_status']]; ?><br /><?php echo $this->_var['lang']['ps'][$this->_var['order']['pay_status']]; ?><br /><?php echo $this->_var['lang']['ss'][$this->_var['order']['shipping_status']]; ?></div>
+                                        </div>
+                                    </td>
+                                            <td >
+                                                <div class="tDiv m110">
+                                                    <div class="btn-wrap">
+                                                        <p>
+                                                           <a href="order.php?act=info&order_id=<?php echo $this->_var['order']['order_id']; ?>" class="btn-tb btn-tb-blue"><?php echo $this->_var['lang']['detail']; ?></a>&nbsp;&nbsp;
+                                                    <!--       <a href="order.php?act=info&order_id=<?php echo $this->_var['order']['order_id']; ?>" class="btn-tb btn-tb-red"><?php echo $this->_var['lang']['op_remove']; ?></a>   -->
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php else: ?>
+                                        <td>
+                                            <div class="tDiv ml10">
+                                                <span class="words"><?php echo $this->_var['order']['id']; ?></span>
+                                            </div>
+                                        </td>
+                                        <td >
+                                            <div class="tDiv ml10">
+                                                <span class="words"><?php echo $this->_var['order']['user_name']; ?></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="tDiv ml10">
+                                                <span class="words"><?php echo $this->_var['order']['mobile_phone']; ?></span>
+                                            </div>
+                                        </td>
+                                        <td >
+                                            <div class="tDiv ml10">
+                                                <span class="words"><?php echo $this->_var['order']['flag_ch']; ?></span>
+                                            </div>
+                                        </td>
+                                        <?php if ($this->_var['list_type'] == 12): ?>
+                                            <td >
+                                                <div class="tDiv ml10">
+                                                    <span class="words"><?php echo $this->_var['order']['bid_price']; ?></span>
+                                                </div>
+                                            </td>
+                                            <td >
+                                                <div class="tDiv ml10">
+                                                    <span class="words"><?php echo $this->_var['order']['bid_time']; ?></span>
+                                                </div>
+                                            </td>
+                                        <?php elseif ($this->_var['list_type'] == 13): ?>    
+                                            <td >
+                                                <div class="tDiv ml10">
+                                                    <span class="words"><?php echo $this->_var['order']['pay_fee']; ?></span>
+                                                </div>
+                                            </td>
+                                            <td >
+                                                <div class="tDiv ml10">
+                                                    <span class="words"><?php echo $this->_var['order']['createtime']; ?></span>
+                                                </div>
+                                            </td>
+                                            <td >
+                                                <div class="tDiv ml10">
+                                                    <span class="words"><?php echo $this->_var['order']['ls_pay_ok_ch']; ?></span>
+                                                </div>
+                                            </td>
+                                            <td >
+                                                <div class="tDiv ml10">
+                                                    <span class="words"><?php echo $this->_var['order']['ls_refund_ch']; ?></span>
+                                                </div>
+                                            </td>
+                                        
+                                        <?php else: ?>
+                                            <td >
+                                                <div class="tDiv ml10">
+                                                    <span class="words"><?php echo $this->_var['order']['createtime']; ?></span>
+                                                </div>
+                                            </td>
+                                        <?php endif; ?>
+                                            <td >
+                                                <div class="tDiv m110">
+                                                    <div class="btn-wrap">
+                                                        <p>
+                                                           <a href="order.php?act=ppj_sign&order_id=<?php echo $this->_var['order']['id']; ?>" class="btn-tb btn-tb-blue"><?php echo $this->_var['lang']['detail']; ?></a>&nbsp;&nbsp;
+                                                    <!--       <a href="order.php?act=ppj_sign_drop&order_id=<?php echo $this->_var['order']['id']; ?>" class="btn-tb btn-tb-red"><?php echo $this->_var['lang']['op_remove']; ?></a>   -->
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                    <?php endif; ?>        
+                            </tbody>
+                        </table>
+                            <?php endforeach; else: ?>
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tbody>
+                                    <tr><td class="no-records" colspan="12"><?php echo $this->_var['lang']['no_records']; ?></td></tr>
+                                </tbody>
+                            </table>
+                        <?php endif; unset($_from); ?><?php $this->pop_vars();; ?>
+                        <table cellpadding="0" cellspacing="0" border="0">
+                            <tfoot>
+                                <tr>
+                                    <td colspan="10">
+                                        <div class="tDiv">
+                                            <div class="tfoot_btninfo">
+                                                <input type="submit" value="<?php echo $this->_var['lang']['op_confirm']; ?>" name="confirm" ectype="btnSubmit" class="btn btn_disabled" disabled="" onclick="this.form.target = '_self'">
+                                                <input type="submit" value="<?php echo $this->_var['lang']['op_invalid']; ?>" name="invalid" ectype="btnSubmit" class="btn btn_disabled" disabled="" onclick="this.form.target = '_self'">
+                                                <input type="submit" value="<?php echo $this->_var['lang']['op_cancel']; ?>" name="cancel" ectype="btnSubmit" class="btn btn_disabled" disabled="" onclick="this.form.target = '_self'">
+                                                <?php if ($this->_var['order_os_remove']): ?>
+                                                <input type="submit" value="<?php echo $this->_var['lang']['remove']; ?>" name="remove" ectype="btnSubmit" class="btn btn_disabled" disabled="" onclick="this.form.target = '_self'">
+                                                <?php endif; ?>
+                                                <input type="submit" value="<?php echo $this->_var['lang']['print_order']; ?>" name="print" ectype="btnSubmit" class="btn btn_disabled" disabled="" onclick="this.form.target = '_blank'">
+                                                <input type="button" value="<?php echo $this->_var['lang']['print_shipping']; ?>" ectype="btnSubmit" class="btn btn_disabled" disabled="" print-data="print_shipping">
+                                                <input name="batch" type="hidden" value="1" />
+                                                <input name="order_id" type="hidden" value="" />
+                                            </div>
+                                            <div class="list-page">
+                                                <?php echo $this->fetch('library/page.lbi'); ?>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>       
+                    <?php else: ?>
                         <table cellpadding="0" cellspacing="0" border="0">
                             <thead>
                                 <tr>
@@ -374,7 +761,8 @@ if ($this->_foreach['foo']['total'] > 0):
                                     </td>
                                 </tr>
                             </tfoot>
-                        </table>     
+                        </table> 
+                        <?php endif; ?>    
                     </div>
                     </form>
                 </div>
@@ -709,7 +1097,7 @@ if ($this->_foreach['foo']['total'] > 0):
             var val = $(this).data("value");
             $(this).addClass("current").siblings().removeClass("current");
             searchOrder(val);
-        })*/	 
+        })*/
          
         function searchOrder(val)
         {		
