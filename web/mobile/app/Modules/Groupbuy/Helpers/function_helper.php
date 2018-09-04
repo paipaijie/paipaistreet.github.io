@@ -10,7 +10,7 @@ function paipai_buy_list($size, $page, $keywords, $sort, $order)
 {
 	$gb_list = array();
 	
-	$now = gmtime();
+	$now = time();
 	
 	$where = '';
 	$where .= ' AND g.is_delete = 0';
@@ -36,8 +36,21 @@ function paipai_buy_list($size, $page, $keywords, $sort, $order)
 		$val = array_merge($val, $ext_info);
 		
 		$val['formated_end_date'] = groupbuydate($val['end_date']);
+
+
+
 		
-		$val['is_end'] = $val['end_date'] < $now ? 1 : 0;
+		//$val['is_end'] = $val['end_date'] < $now ? 1 : 0;
+	
+		if($val['end_date'] > $now && $val['start_date'] < $now){
+			$val['is_end'] = 1;
+		}else if($val['start_date'] > $now){
+			$val['is_end'] = 0;
+		}else{
+			$val['is_end'] = 2;
+		}
+
+
 				
 		$val['formated_deposit'] = price_format($val['ppj_margin_fee'], false);
 		
@@ -100,6 +113,117 @@ function paipai_buy_list($size, $page, $keywords, $sort, $order)
    
 	return $group_buy;
 }
+
+
+
+
+function paipai_buy_add_list($size, $page, $keywords, $sort, $order)
+{
+	$gb_list = array();
+	
+	$now = time();
+	
+	$where = '';
+	$where .= ' AND g.is_delete = 0';
+
+	if ($keywords) {
+		$where .= ' AND (b.ppj_name LIKE \'%' . $keywords . '%\' OR g.goods_name LIKE \'%' . $keywords . '%\') ';
+	}
+
+	if ($sort == 'comments_number') {
+		$sql = 'SELECT b.*, IFNULL(g.goods_thumb, \'\') AS goods_thumb, b.ppj_id AS group_buy_id, g.market_price,' . 'b.start_time AS start_date, b.end_time AS end_date ' . 'FROM ' . $GLOBALS['ecs']->table('paipai_list') . ' AS b ' . 'LEFT JOIN ' . $GLOBALS['ecs']->table('goods') . ' AS g ON b.goods_id = g.goods_id ' . 'WHERE b.act_type = \'' . GAT_PAIPAI_BUY . ('\' ' . $where . ' ') . (' AND b.ppj_staus < 3 AND b.review_status = 3 ORDER BY g.') . $sort . ' ' . $order;
+	}
+	else {
+		$sql = 'SELECT b.*, IFNULL(g.goods_thumb, \'\') AS goods_thumb, b.ppj_id AS group_buy_id, g.market_price,' . 'b.start_time AS start_date, b.end_time AS end_date ' . 'FROM ' . $GLOBALS['ecs']->table('paipai_list') . ' AS b ' . 'LEFT JOIN ' . $GLOBALS['ecs']->table('goods') . ' AS g ON b.goods_id = g.goods_id ' . 'WHERE b.act_type = \'' . GAT_PAIPAI_BUY . ('\' ' . $where . ' ') . (' AND b.ppj_staus < 3 AND b.review_status = 3 ORDER BY b.') . $sort . ' ' . $order;
+	}
+
+	$res = $GLOBALS['db']->selectLimit($sql, $size, ($page - 1) * $size);
+
+	foreach ($res as $key => $val) {
+		
+		
+		$ext_info = unserialize($val['ext_info']);
+		
+		$val = array_merge($val, $ext_info);
+		
+		$val['formated_end_date'] = groupbuydate($val['end_date']);
+
+
+	
+		if($val['end_date'] > $now && $val['start_date'] < $now){
+			$val['is_end'] = 1;
+		}else if($val['start_date'] > $now){
+			$val['is_end'] = 0;
+		}else{
+			$val['is_end'] = 2;
+		}
+
+
+				
+		$val['formated_deposit'] = price_format($val['ppj_margin_fee'], false);
+		
+		
+		$price_ladder = $val['price_ladder'];
+		if (!is_array($price_ladder) || empty($price_ladder)) {
+			$price_ladder = array(
+				array('amount' => 0, 'price' => 0)
+				);
+		}
+		else {
+			foreach ($price_ladder as $key => $amount_price) {
+				$price_ladder[$key]['formated_price'] = price_format($amount_price['price']);
+			}
+		}
+
+		$val['price_ladder'] = $price_ladder;
+		
+		$price = $val['market_price'];
+		
+		$nowprice = $val['price_ladder'][0]['price'];
+		
+		
+
+		$stat = paipai_buy_stat($val['ppj_id'], $val['ppj_no'],$val['ppj_margin_fee']);//获取订单数
+		
+		$val = array_merge($val, $stat);
+			
+		$cur_amount = $stat['valid_goods'];
+
+	foreach ($price_ladder as $amount_price) {
+		if ($amount_price['amount'] <= $cur_amount) {
+			$cur_price = $amount_price['price'];
+		}
+		else {
+			break;
+		}
+	}
+		
+		$val['cur_amount'] = $stat['valid_goods'];
+		
+		$val['goods_thumb'] = get_image_path($val['goods_thumb']);
+		
+		$val['url'] = build_uri('groupbuy', array('gbid' => $val['group_buy_id']));
+		
+		
+		$val['cur_price'] = $cur_price;
+	
+	
+	    $val['price'] = price_format($cur_price, false);// 当前价格
+		
+		//$val['price'] = price_format($nowprice, false);
+				
+		$group_buy[] = $val;
+		
+		
+	}
+
+ //  var_dump ($val['url']);
+   
+	return $group_buy;
+}
+
+
+
 
 
 

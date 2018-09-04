@@ -48,7 +48,6 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 			$category = get_child_tree(0);
 			S('category0', $category);
 		}
-
 		$this->assign('cat_id', $this->cat_id);
 		$this->assign('category', $category);
 		$this->assign('page_title', L('all_category'));

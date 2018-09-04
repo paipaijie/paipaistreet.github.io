@@ -117,12 +117,22 @@
 											</div>
 										</div>-->
 										
-										<div class="item">
+										<!-- <div class="item">
 											<div class="label"><?php echo $this->_var['lang']['label_deposit']; ?></div>
 											<div class="label_value"><input name="ppl_margin_fee" type="text" id="ppl_margin_fee" value="<?php echo empty($this->_var['group_buy']['ppj_margin_fee']) ? '0' : $this->_var['group_buy']['ppj_margin_fee']; ?>" class="text" autocomplete="off" <?php if ($this->_var['group_buy']['staus']): ?>readonly<?php endif; ?>/>
+												<div class="notic"><?php echo $this->_var['lang']['notice_restrict_baozhenngjin']; ?></div>
 												<div class="form_prompt"></div>
 											</div>
-										</div>
+										</div> -->
+
+										<div class="item">
+	                                        <div class="label"><?php echo $this->_var['lang']['require_field']; ?><?php echo $this->_var['lang']['label_deposit']; ?></div>
+	                                        <div class="label_value">
+												<input type="text" name="ppl_margin_fee" id="ppl_margin_fee" class="text" value="<?php echo empty($this->_var['group_buy']['ppj_margin_fee']) ? '0' : $this->_var['group_buy']['ppj_margin_fee']; ?>" autocomplete="off" />
+												<div class="notic"><?php echo $this->_var['lang']['notice_restrict_baozhenngjin']; ?></div>
+												<div class="form_prompt"></div>
+	                                        </div>
+	                                    </div>
 										
 										
 										<div class="item">
@@ -350,8 +360,10 @@
                     goods_id :{
                         required : true
                     },
-                    deposit:{
-                        number : true
+                    ppl_margin_fee:{
+                        //number : true
+                        required : true,
+                        min : 1
                     },
                     restrict_amount:{
                         digits : true
@@ -378,7 +390,9 @@
                         required : '<i class="icon icon-exclamation-sign"></i>'+error_goods_null
                     },
                     deposit:{
-                        number : '<i class="icon icon-exclamation-sign"></i>'+error_deposit
+                        //number : '<i class="icon icon-exclamation-sign"></i>'+error_deposit
+						required : '<i class="icon icon-exclamation-sign"></i>'+error_goods_null
+
                     },
                     restrict_amount:{
                         digits : '<i class="icon icon-exclamation-sign"></i>'+error_restrict_amount,

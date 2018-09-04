@@ -36,7 +36,8 @@
                     <section class="swiper-slide swiper-no-swiping product-list j-product-list product-list-medium" data="1">
                         <ul>
                             <%each gb_list as list%>
-                            <%if list.is_end == 1 || list.is_end == 2%>
+                            <%if list.is_end == 1 || list.is_end == 0%>
+                            <%if list.ppj_id == {$att['ppj_id']} && list.ppj_no == {$att['ppj_no']}%>
                             <li>
                                 <div class="product-div">
                                 
@@ -84,6 +85,7 @@
                                 </div>
                                 
                             </li>
+                            <%/if%>
                             <%/if%>
                             <%/each%>
                             

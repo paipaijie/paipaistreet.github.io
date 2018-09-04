@@ -34,6 +34,7 @@ $_LANG['notice_datetime'] = '（年月日－时）';
 $_LANG['label_deposit'] = '保证金：';
 $_LANG['label_restrict_amount'] = '限购数量：';
 $_LANG['notice_restrict_amount'] = '达到此数量，拍拍活动自动结束。0表示没有数量限制。';
+$_LANG['notice_restrict_baozhenngjin'] = '保证金必须大于0';
 $_LANG['label_gift_integral'] = '赠送积分数：';
 $_LANG['notice_start_time'] = '拍拍活动已开始则无法修改开始时间。';
 $_LANG['label_price_ladder'] = '价格阶梯：';
@@ -84,7 +85,11 @@ $_LANG['error_goods_not_end'] = '您选择的商品目前有一个拍拍结束�
 
 $_LANG['js_languages']['error_goods_null'] = '请选择拍拍商品！';
 $_LANG['js_languages']['error_deposit'] = '您输入的保证金不是数字！';
+<<<<<<< Updated upstream
 $_LANG['js_languages']['error_goods_deposit'] = '保证金必须大于批发价！';
+=======
+$_LANG['js_languages']['error_deposit_null'] = '您输入的！';
+>>>>>>> Stashed changes
 $_LANG['js_languages']['error_restrict_amount'] = '您输入的限购数量不是整数！';
 $_LANG['js_languages']['error_gift_integral'] = '您输入的赠送积分数不是整数！';
 $_LANG['js_languages']['search_is_null'] = '没有搜索到任何商品，请重新搜索';

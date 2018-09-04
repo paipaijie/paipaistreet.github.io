@@ -33,8 +33,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 
 		if (IS_AJAX) {
 			$condition = ' 1=1 ';
-			$keywords = I('keywords');
-
+			$keywords = I('keywords');			
 			if ($keywords) {
 				$type = I('type', '');
 
@@ -116,7 +115,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 			$user_store_count = dao('collect_store')->where(array('user_id' => $_SESSION['user_id']))->count();
 			$cache_id = md5($sql . $user_store_count . $store_user);
 			$store = S($cache_id);
-
+			
 			if ($store === false) {
 				$store_list = $this->db->getAll($sql);
 
@@ -163,7 +162,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 
 		
 		$category = $this->db->getAll('SELECT cat_id, cat_name, cat_alias_name,touch_icon FROM {pre}category WHERE parent_id = 0 and is_show = 1 ORDER BY sort_order ASC, cat_id ASC');
-
+        
 		foreach ($category as $key => $val) {
 			$category[$key]['cat_alias_name'] = empty($val['cat_alias_name']) ? $val['cat_name'] : $val['cat_alias_name'];
 			$category[$key]['touch_icon'] = get_image_path($val['touch_icon']);

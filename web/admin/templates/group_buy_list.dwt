@@ -46,6 +46,7 @@
                             <div class="imitate_select select_w170">
                                 <div class="cite">{$lang.adopt_status}</div>
                                 <ul>
+                                11111
                                     <li><a href="javascript:;" data-value="0" class="ftx-01">{$lang.adopt_status}</a></li>
                                     <li><a href="javascript:;" data-value="1" class="ftx-01">{$lang.not_audited}</a></li>
                                     <li><a href="javascript:;" data-value="2" class="ftx-01">{$lang.audited_not_adopt}</a></li>

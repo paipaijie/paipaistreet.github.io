@@ -81,10 +81,10 @@ echo $this->_echash . $k['name'] . '|' . serialize($k) . $this->_echash;
                 <div class="lift-item lift-h-seckill lift-item-first" ectype="liftItem" data-target="#h-seckill"><span><?php echo $this->_var['lang']['lift_seckill']; ?></span><i class="lift-arrow"></i></div>
                 <div class="lift-item lift-h-need lift-item-current" ectype="liftItem" data-target="#h-need"><span><?php echo $this->_var['lang']['lift_need']; ?></span><i class="lift-arrow"></i></div>
                 <div class="lift-item" ectype="liftItem" data-target="#h-brand"><span><?php echo $this->_var['lang']['lift_brand']; ?></span><i class="lift-arrow"></i></div>
-                <?php $_from = $this->_var['floor_data']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('key', 'data_0_78480000_1534990264');if (count($_from)):
-    foreach ($_from AS $this->_var['key'] => $this->_var['data_0_78480000_1534990264']):
+                <?php $_from = $this->_var['floor_data']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('key', 'data_0_32573000_1535509253');if (count($_from)):
+    foreach ($_from AS $this->_var['key'] => $this->_var['data_0_32573000_1535509253']):
 ?>
-                <div class="lift-item lift-floor-item" ectype="liftItem"><span><?php echo $this->_var['data_0_78480000_1534990264']['name']; ?></span><i class="lift-arrow"></i></div>
+                <div class="lift-item lift-floor-item" ectype="liftItem"><span><?php echo $this->_var['data_0_32573000_1535509253']['name']; ?></span><i class="lift-arrow"></i></div>
                 <?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
                 <div class="lift-item lift-master" ectype="liftItem" data-target="#master"><span><?php echo $this->_var['lang']['lift_master']; ?></span><i class="lift-arrow"></i></div>
                 <div class="lift-item lift-storeRec" ectype="liftItem" data-target="#storeRec"><span><?php echo $this->_var['lang']['lift_storeRec']; ?></span><i class="lift-arrow"></i></div>

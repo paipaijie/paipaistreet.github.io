@@ -115,6 +115,7 @@
 												<div class="form_prompt"></div>
 											</div>
 										</div>-->
+<<<<<<< Updated upstream
 
 										<!--{保证金}-->
 										<div class="item">
@@ -125,6 +126,27 @@
 												<div class="form_prompt"></div>
 											</div>
 										</div>
+=======
+										
+										<!-- <div class="item">
+											<div class="label">{$lang.label_deposit}</div>
+											<div class="label_value"><input name="ppl_margin_fee" type="text" id="ppl_margin_fee" value="{$group_buy.ppj_margin_fee|default:0}" class="text" autocomplete="off" {if $group_buy.staus}readonly{/if}/>
+												<div class="notic">{$lang.notice_restrict_baozhenngjin}</div>
+												<div class="form_prompt"></div>
+											</div>
+										</div> -->
+
+										<div class="item">
+	                                        <div class="label">{$lang.require_field}{$lang.label_deposit}</div>
+	                                        <div class="label_value">
+												<input type="text" name="ppl_margin_fee" id="ppl_margin_fee" class="text" value="{$group_buy.ppj_margin_fee|default:0}" autocomplete="off" />
+												<div class="notic">{$lang.notice_restrict_baozhenngjin}</div>
+												<div class="form_prompt"></div>
+	                                        </div>
+	                                    </div>
+										
+										
+>>>>>>> Stashed changes
 										<div class="item">
 											<div class="label">{$lang.require_field}起拍价：</div>
 											<div class="label_value">
@@ -354,10 +376,16 @@
                         required : true
                     },
                     ppl_margin_fee:{
+<<<<<<< Updated upstream
                         required : true
                     },
                     ppj_start_fee:{
                     	required : true
+=======
+                        //number : true
+                        required : true,
+                        min : 1
+>>>>>>> Stashed changes
                     },
                     restrict_amount:{
                         digits : true
@@ -383,11 +411,18 @@
                     goods_id:{
                         required : '<i class="icon icon-exclamation-sign"></i>'+error_goods_null
                     },
+<<<<<<< Updated upstream
                     ppl_margin_fee:{
 						required : '<i class="icon icon-exclamation-sign"></i>'+error_goods_deposit
                     },
                     ppj_start_fee:{
                     	required : '<i class="icon icon-exclamation-sign"></i>'+goods_start_fee
+=======
+                    deposit:{
+                        //number : '<i class="icon icon-exclamation-sign"></i>'+error_deposit
+						required : '<i class="icon icon-exclamation-sign"></i>'+error_goods_null
+
+>>>>>>> Stashed changes
                     },
                     restrict_amount:{
                         digits : '<i class="icon icon-exclamation-sign"></i>'+error_restrict_amount,
