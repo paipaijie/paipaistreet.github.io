@@ -8,7 +8,7 @@
  */
 
  define('APP_DEBUG', false);
-date_default_timezone_set('PRC');
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
