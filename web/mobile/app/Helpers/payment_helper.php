@@ -142,7 +142,7 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '', $module_name = 
 
 					if ($order['pay_status'] == 0) {
 						$order_amount = $order['goods_amount'] + $order['shipping_fee'] + $order['insure_fee'] + $order['pay_fee'] + $order['tax'] - $order['money_paid'] - $order['order_amount'];
-						$sql = 'UPDATE ' . $GLOBALS['ecs']->table('order_info') . ' SET order_status = \'' . OS_CONFIRMED . '\', ' . ' confirm_time = \'' . gmtime() . '\', ' . ' pay_status = \'' . PS_PAYED_PART . '\', ' . ' pay_time = \'' . gmtime() . '\', ' . (' money_paid = \'' . $money_paid . '\',') . (' order_amount = \'' . $order_amount . '\' ') . ('WHERE order_id = \'' . $order_id . '\'');
+						$sql = 'UPDATE ' . $GLOBALS['ecs']->table('order_info') . ' SET order_status = \'' . OS_CONFIRMED . '\', ' . ' confirm_time = \'' . time() . '\', ' . ' pay_status = \'' . PS_PAYED_PART . '\', ' . ' pay_time = \'' . time() . '\', ' . (' money_paid = \'' . $money_paid . '\',') . (' order_amount = \'' . $order_amount . '\' ') . ('WHERE order_id = \'' . $order_id . '\'');
 						$GLOBALS['db']->query($sql);
 						get_goods_sale($order['order_id']);
 						order_action($order_sn, OS_CONFIRMED, SS_UNSHIPPED, PS_PAYED_PART, $note, L('buyer'));
@@ -150,7 +150,7 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '', $module_name = 
 					}
 					else {
 						
-						$sql = 'UPDATE ' . $GLOBALS['ecs']->table('order_info') . ' SET pay_status =\'' . PS_PAYED . '\', ' . ' pay_time = \'' . gmtime() . '\', ' . (' money_paid = \'' . $money_paid . '\',') . ' order_amount = 0 ' . ('WHERE order_id = \'' . $order_id . '\'');
+						$sql = 'UPDATE ' . $GLOBALS['ecs']->table('order_info') . ' SET pay_status =\'' . PS_PAYED . '\', ' . ' pay_time = \'' . time() . '\', ' . (' money_paid = \'' . $money_paid . '\',') . ' order_amount = 0 ' . ('WHERE order_id = \'' . $order_id . '\'');
 						$GLOBALS['db']->query($sql);
 						
 						order_action($order_sn, OS_CONFIRMED, SS_UNSHIPPED, PS_PAYED, $note, L('buyer'));
@@ -178,10 +178,18 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '', $module_name = 
 						    
 					*/	   						    
 					}
-				
-					
+				    //is_pay_ok  0为失败  1为成功
+					if($order['pay_status']==11 && $pay_status == '10'){
+						$m_sql='UPDATE '. $GLOBALS['ecs']->table('dsc_paipai_seller_pay_margin') .' SET ls_pay_ok= \''1'\' ,pay_time=\''.time().'\''; 
+						$update_margin=$GLOBALS['db']->query($m_sql);
+						if($update_margin){
+							// 0 为失败   1为成功   2 为进行中。。。
+							$um_sql='UPDATE '. $GLOBALS['ecs']->table('dsc_paipai_goods_bid_user') .' SET is_status= \''2'\' ,bid_time=\''.time().'\''; 
+							$GLOBALS['db']->query($um_sql);
+						}
+					}
 									
-					$sql = 'UPDATE ' . $GLOBALS['ecs']->table('order_info') . ' SET order_status = \'' . OS_CONFIRMED . '\', ' . ' confirm_time = \'' . gmtime() . '\', ' . (' pay_status = \'' . $pay_status . '\', ') . (' pay_fee = \'' . $pay_fee . '\', ') . ' pay_time = \'' . gmtime() . '\', ' . ' money_paid = money_paid + order_amount,' . ' order_amount = 0 ' . ('WHERE order_id = \'' . $order_id . '\'');
+					$sql = 'UPDATE ' . $GLOBALS['ecs']->table('order_info') . ' SET order_status = \'' . OS_CONFIRMED . '\', ' . ' confirm_time = \'' . time() . '\', ' . (' pay_status = \'' . $pay_status . '\', ') . (' pay_fee = \'' . $pay_fee . '\', ') . ' pay_time = \'' . time() . '\', ' . ' money_paid = money_paid + order_amount,' . ' order_amount = 0 ' . ('WHERE order_id = \'' . $order_id . '\'');
 					$GLOBALS['db']->query($sql);
 					
 					create_snapshot($order_id);
@@ -208,7 +216,7 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '', $module_name = 
 				if ($main_order_id == 0 && 0 < $child_num && 0 < $order_id) {
 					$sql = 'SELECT order_id, order_sn, pay_id, order_amount FROM ' . $GLOBALS['ecs']->table('order_info') . (' WHERE main_order_id = \'' . $order_id . '\'');
 					$order_res = $GLOBALS['db']->getAll($sql);
-					$sql = 'UPDATE ' . $GLOBALS['ecs']->table('order_info') . ' SET order_status = \'' . OS_CONFIRMED . '\', ' . ' confirm_time = \'' . gmtime() . '\', ' . (' pay_status = \'' . $pay_status . '\', ') . ' pay_time = \'' . gmtime() . '\', ' . ' money_paid = order_amount,' . ' order_amount = 0 ' . ('WHERE main_order_id = \'' . $order_id . '\'');
+					$sql = 'UPDATE ' . $GLOBALS['ecs']->table('order_info') . ' SET order_status = \'' . OS_CONFIRMED . '\', ' . ' confirm_time = \'' . time() . '\', ' . (' pay_status = \'' . $pay_status . '\', ') . ' pay_time = \'' . time() . '\', ' . ' money_paid = order_amount,' . ' order_amount = 0 ' . ('WHERE main_order_id = \'' . $order_id . '\'');
 					$GLOBALS['db']->query($sql);
 
 					foreach ($order_res as $row) {
@@ -262,7 +270,7 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '', $module_name = 
 					$pushData = array(
 						'keyword1' => array('value' => $order_sn, 'color' => '#173177'),
 						'keyword2' => array('value' => '已付款', 'color' => '#173177'),
-						'keyword3' => array('value' => date('Y-m-d', gmtime()), 'color' => '#173177'),
+						'keyword3' => array('value' => date('Y-m-d', time()), 'color' => '#173177'),
 						'keyword4' => array('value' => $GLOBALS['_CFG']['shop_name'], 'color' => '#173177'),
 						'keyword5' => array('value' => number_format($pay_log['order_amount'], 2, '.', ''), 'color' => '#173177')
 						);
@@ -348,7 +356,7 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '', $module_name = 
 						$sql = 'SELECT COUNT(*) FROM ' . $GLOBALS['ecs']->table('order_goods') . (' WHERE order_id = \'' . $order_id . '\' AND is_real = 1');
 
 						if ($GLOBALS['db']->getOne($sql) <= 0) {
-							dao('order_info')->where(array('order_id' => $order_id))->save(array('order_status' => OS_SPLITED, 'shipping_status' => SS_SHIPPED, 'shipping_time' => gmtime()));
+							dao('order_info')->where(array('order_id' => $order_id))->save(array('order_status' => OS_SPLITED, 'shipping_status' => SS_SHIPPED, 'shipping_time' => time()));
 							order_action($order_sn, OS_CONFIRMED, SS_SHIPPED, $pay_status, $note, L('buyer'));
 
 							if (0 < $order['user_id']) {
@@ -372,7 +380,7 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '', $module_name = 
 				$res_id = $GLOBALS['db']->getOne($sql);
 
 				if (empty($res_id)) {
-					$sql = 'UPDATE ' . $GLOBALS['ecs']->table('user_account') . ' SET paid_time = \'' . gmtime() . '\', is_paid = 1' . (' WHERE id = \'' . $pay_log['order_id'] . '\' LIMIT 1');
+					$sql = 'UPDATE ' . $GLOBALS['ecs']->table('user_account') . ' SET paid_time = \'' . time() . '\', is_paid = 1' . (' WHERE id = \'' . $pay_log['order_id'] . '\' LIMIT 1');
 					$GLOBALS['db']->query($sql);
 					$sql = 'SELECT user_id, amount FROM ' . $GLOBALS['ecs']->table('user_account') . (' WHERE id = \'' . $pay_log['order_id'] . '\'');
 					$arr = $GLOBALS['db']->getRow($sql);
@@ -383,7 +391,7 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '', $module_name = 
 			}
 			else if ($pay_log['order_type'] == PAY_WHOLESALE) {
 				$order_id = $pay_log['order_id'];
-				$time = gmtime();
+				$time = time();
 				$sql = ' UPDATE ' . $GLOBALS['ecs']->table('wholesale_order_info') . (' SET pay_status = \'' . $pay_status . '\' ,pay_time = \'' . $time . '\'  WHERE order_id = \'' . $order_id . '\'');
 				$GLOBALS['db']->query($sql);
 				$sql = 'UPDATE ' . $GLOBALS['ecs']->table('pay_log') . 'SET is_paid = 1 WHERE order_id = \'' . $order_id . '\' AND order_type = \'' . PAY_WHOLESALE . '\'';
@@ -418,7 +426,7 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '', $module_name = 
 				}
 
 				if (empty($res_id)) {
-					$time = gmtime();
+					$time = time();
 					$sql = 'INSERT INTO ' . $GLOBALS['ecs']->table('drp_shop') . '(user_id,create_time, isbuy, audit ,status) VALUES ' . '(\'' . $pay_log[order_id] . '\',\'' . $time . '\', \'1\', \'' . $audit . '\', \'1\')';
 					$GLOBALS['db']->query($sql);
 				}
@@ -431,7 +439,7 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '', $module_name = 
 				$msg = '';
 				$sql = 'SELECT pay_time, order_sn FROM ' . $GLOBALS['ecs']->table('order_info') . (' WHERE order_id = \'' . $pay_log['order_id'] . '\'');
 				$row = $GLOBALS['db']->getRow($sql);
-				$intval_time = gmtime() - $row['pay_time'];
+				$intval_time = time() - $row['pay_time'];
 				if (0 <= $intval_time && $intval_time < 3600 * 12) {
 					$virtual_card = array();
 
