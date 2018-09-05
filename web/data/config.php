@@ -40,6 +40,8 @@ define('API_TIME', '');
 
 define('EC_TEMPLATE', 'ecmoban_dsc2017');
 
+date_default_timezone_set('PRC');
+
 //define('DEBUG_MODE', 8);
 
 

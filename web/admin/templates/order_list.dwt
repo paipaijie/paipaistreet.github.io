@@ -103,6 +103,8 @@
                                     <th width="10%"><div class="tDiv">{$lang.ppj_bid_no}</div></th>
                                     <th width="10%"><div class="tDiv">{$lang.ppj_bid_date}</div></th>
                                     {elseif $list_type eq 13}    
+                                    <th width="10%"><div class="tDiv">拍拍活动id</div></th>
+                                    <th width="10%"><div class="tDiv">期数</div></th>
                                     <th width="10%"><div class="tDiv">{$lang.ppj_margin_no}</div></th>
                                     <th width="10%"><div class="tDiv">{$lang.ppj_margin_pay_date}</div></th>
                                     <th width="10%"><div class="tDiv">{$lang.ppj_margin_status}</div></th>
@@ -135,7 +137,9 @@
                                 {if $list_type eq 12}
                                     <col width="10%">
                                     <col width="10%">
-                                {elseif $list_type eq 13}    
+                                {elseif $list_type eq 13}
+                                    <col width="10%">
+                                    <col width="10%">    
                                     <col width="10%">
                                     <col width="10%">
                                     <col width="10%">
@@ -363,7 +367,17 @@
                                                     <span class="words">{$order.bid_time}</span>
                                                 </div>
                                             </td>
-                                        {elseif $list_type eq 13}    
+                                        {elseif $list_type eq 13}   
+                                            <td >
+                                                <div class="tDiv ml10">
+                                                    <span class="words">{$order.ppj_id}</span>
+                                                </div>
+                                            </td>
+                                            <td >
+                                                <div class="tDiv ml10">
+                                                    <span class="words">{$order.ppj_no}</span>
+                                                </div>
+                                            </td> 
                                             <td >
                                                 <div class="tDiv ml10">
                                                     <span class="words">{$order.pay_fee}</span>
@@ -371,7 +385,7 @@
                                             </td>
                                             <td >
                                                 <div class="tDiv ml10">
-                                                    <span class="words">{$order.createtime}</span>
+                                                    <span class="words">{$order.paytime}</span>
                                                 </div>
                                             </td>
                                             <td >

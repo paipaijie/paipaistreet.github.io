@@ -7,7 +7,8 @@
  * @author   carson <wanganlin@ecmoban.com>
  */
 
- define('APP_DEBUG', false);
+define('APP_DEBUG', false);
+date_default_timezone_set('PRC');
 
 /*
 |--------------------------------------------------------------------------

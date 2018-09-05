@@ -1408,6 +1408,8 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 		$_POST['inv_payee'] = isset($_POST['inv_payee']) ? compile_str($_POST['inv_payee']) : '';
 		$_POST['tax_id'] = isset($_POST['tax_id']) ? compile_str($_POST['tax_id']) : '';
 		$_POST['inv_content'] = isset($_POST['inv_content']) ? compile_str($_POST['inv_content']) : '';
+		$_POST['bid_price'] = isset($_POST['bid_price']) ? substr($_POST['bid_price'],2) : '';
+
 		$msg = input('post.postscript', '', array('htmlspecialchars', 'trim'));
 		$ru_id_arr = input('post.ru_id', '', array('htmlspecialchars', 'trim'));
 		$shipping_arr = input('post.shipping', '', array('htmlspecialchars', 'trim'));
@@ -1450,7 +1452,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 		$ppj_no=session('ppj_no');
 		
 
-		$order = array('shipping_id' => empty($shipping['shipping_id']) ? 0 : $shipping['shipping_id'], 'shipping_type' => empty($shipping['shipping_type']) ? 0 : $shipping['shipping_type'], 'shipping_code' => empty($shipping['shipping_code']) ? 0 : $shipping['shipping_code'], 'pay_id' => intval($_POST['payment']), 'pack_id' => isset($_POST['pack']) ? intval($_POST['pack']) : 0, 'card_id' => isset($_POST['card']) ? intval($_POST['card']) : 0, 'card_message' => trim($_POST['card_message']), 'surplus' => isset($_POST['surplus']) ? floatval($_POST['surplus']) : 0, 'integral' => isset($_POST['integral']) ? intval($_POST['integral']) : 0, 'is_surplus' => isset($_POST['is_surplus']) ? intval($_POST['is_surplus']) : 0, 'bonus_id' => I('bonus', 0, 'intval'), 'uc_id' => I('uc_id', 0, 'intval'), 'vc_id' => I('vc_id', 0, 'intval'), 'need_inv' => empty($_POST['need_inv']) ? 0 : 1, 'tax_id' => isset($_POST['tax_id']) ? trim($_POST['tax_id']) : '', 'inv_type' => I('inv_type', 1, 'intval'), 'inv_payee' => isset($_POST['inv_payee']) ? trim($_POST['inv_payee']) : '', 'invoice_id' => I('invoice_id', 0, 'intval'), 'invoice' => I('invoice', 1, 'intval'), 'invoice_type' => I('inv_type', 1, 'intval'), 'inv_content' => isset($_POST['inv_content']) ? trim($_POST['inv_content']) : '', 'vat_id' => I('vat_id', 0, 'intval'), 'postscript' => empty($postscript) ? '' : $postscript, 'how_oos' => isset($how_oos) ? addslashes($how_oos) : '', 'need_insure' => isset($_POST['need_insure']) ? intval($_POST['need_insure']) : 0, 'user_id' => $_SESSION['user_id'],'ppj_no' => $ppj_no, 'ppj_id' => $ppj_id,'add_time' => gmtime(), 'order_status' => OS_UNCONFIRMED, 'shipping_status' => SS_UNSHIPPED, 'pay_status' =>11, 'agency_id' => get_agency_by_regions(array($consignee['country'], $consignee['province'], $consignee['city'], $consignee['district'])), 'point_id' => empty($point_info['point_id']) ? 0 : $point_info['point_id'], 'shipping_dateStr' => empty($point_info['shipping_dateStr']) ? '' : $point_info['shipping_dateStr'], 'mobile' => isset($_POST['store_mobile']) && !empty($_POST['store_mobile']) ? addslashes(trim($_POST['store_mobile'])) : '');
+		$order = array('shipping_id' => empty($shipping['shipping_id']) ? 0 : $shipping['shipping_id'], 'shipping_type' => empty($shipping['shipping_type']) ? 0 : $shipping['shipping_type'], 'shipping_code' => empty($shipping['shipping_code']) ? 0 : $shipping['shipping_code'], 'pay_id' => intval($_POST['payment']), 'pack_id' => isset($_POST['pack']) ? intval($_POST['pack']) : 0, 'card_id' => isset($_POST['card']) ? intval($_POST['card']) : 0, 'card_message' => trim($_POST['card_message']), 'surplus' => isset($_POST['surplus']) ? floatval($_POST['surplus']) : 0, 'integral' => isset($_POST['integral']) ? intval($_POST['integral']) : 0, 'is_surplus' => isset($_POST['is_surplus']) ? intval($_POST['is_surplus']) : 0, 'bonus_id' => I('bonus', 0, 'intval'), 'uc_id' => I('uc_id', 0, 'intval'), 'vc_id' => I('vc_id', 0, 'intval'), 'need_inv' => empty($_POST['need_inv']) ? 0 : 1, 'tax_id' => isset($_POST['tax_id']) ? trim($_POST['tax_id']) : '', 'inv_type' => I('inv_type', 1, 'intval'), 'inv_payee' => isset($_POST['inv_payee']) ? trim($_POST['inv_payee']) : '', 'invoice_id' => I('invoice_id', 0, 'intval'), 'invoice' => I('invoice', 1, 'intval'), 'invoice_type' => I('inv_type', 1, 'intval'), 'inv_content' => isset($_POST['inv_content']) ? trim($_POST['inv_content']) : '', 'vat_id' => I('vat_id', 0, 'intval'), 'postscript' => empty($postscript) ? '' : $postscript, 'how_oos' => isset($how_oos) ? addslashes($how_oos) : '', 'need_insure' => isset($_POST['need_insure']) ? intval($_POST['need_insure']) : 0, 'user_id' => $_SESSION['user_id'],'ppj_no' => $ppj_no, 'ppj_id' => $ppj_id,'add_time' => time(), 'order_status' => OS_UNCONFIRMED, 'shipping_status' => SS_UNSHIPPED, 'pay_status' =>11, 'agency_id' => get_agency_by_regions(array($consignee['country'], $consignee['province'], $consignee['city'], $consignee['district'])), 'point_id' => empty($point_info['point_id']) ? 0 : $point_info['point_id'], 'shipping_dateStr' => empty($point_info['shipping_dateStr']) ? '' : $point_info['shipping_dateStr'], 'mobile' => isset($_POST['store_mobile']) && !empty($_POST['store_mobile']) ? addslashes(trim($_POST['store_mobile'])) : '');
 		
 		
 		if (isset($_SESSION['flow_type']) && $flow_type != CART_GENERAL_GOODS && $flow_type != CART_ONESTEP_GOODS) {
@@ -1498,7 +1500,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 		else if (isset($_POST['bonus_sn'])) {
 			$bonus_sn = trim($_POST['bonus_sn']);
 			$bonus = bonus_info(0, $bonus_sn);
-			$now = gmtime();
+			$now = time();
 			if (empty($bonus) || 0 < $bonus['user_id'] || 0 < $bonus['order_id'] || cart_amount(true, $flow_type, $_SESSION['cart_value']) < $bonus['min_goods_amount'] || $bonus['use_end_date'] < $now) {
 			}
 			else {
@@ -1521,11 +1523,11 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 		else if (isset($_POST['value_card_psd'])) {
 			$value_card_psd = trim($_POST['value_card_psd']);
 			$value_card = value_card_info(0, $value_card_psd);
-			$now = gmtime();
+			$now = time();
 			if (!(empty($value_card) || 0 < $value_card['user_id'])) {
 				if (0 < $user_id && empty($value_card['end_time'])) {
 					$end_time = ', end_time = \'' . local_strtotime('+' . $value_card['vc_indate'] . ' months ') . '\' ';
-					$sql = ' UPDATE {pre}value_card SET user_id = \'' . $user_id . '\', bind_time = \'' . gmtime() . '\'' . $end_time . (' WHERE vid = \'' . $value_card['vid'] . '\' ');
+					$sql = ' UPDATE {pre}value_card SET user_id = \'' . $user_id . '\', bind_time = \'' . time() . '\'' . $end_time . (' WHERE vid = \'' . $value_card['vid'] . '\' ');
 					$this->db->query($sql);
 					$order['vc_id'] = $value_card['vid'];
 					$order['vc_psd'] = $value_card_psd;
@@ -1710,9 +1712,9 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 
 		if ($order['order_amount'] <= 0) {
 			$order['order_status'] = OS_CONFIRMED;
-			$order['confirm_time'] = gmtime();
+			$order['confirm_time'] = time();
 			$order['pay_status'] = PS_PAYED;
-			$order['pay_time'] = gmtime();
+			$order['pay_time'] = time();
 			$order['order_amount'] = 0;
 			$stores_sms = 1;
 			$snapshot = true;
@@ -1772,7 +1774,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 					$team_doods = $this->db->getRow($sql);
 					$team['t_id'] = $_SESSION['t_id'];
 					$team['goods_id'] = $team_doods['goods_id'];
-					$team['start_time'] = gmtime();
+					$team['start_time'] = time();
 					$team['status'] = 0;
 					$new_team = $this->db->filter_field('team_log', $team);
 					$team_log_id = $this->db->table('team_log')->data($new_team)->add();
@@ -1789,7 +1791,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 				$team_doods = $this->db->getRow($sql);
 				$team['t_id'] = $_SESSION['t_id'];
 				$team['goods_id'] = $team_doods['goods_id'];
-				$team['start_time'] = gmtime();
+				$team['start_time'] = time();
 				$team['status'] = 0;
 				$new_team = $this->db->filter_field('team_log', $team);
 				$team_log_id = $this->db->table('team_log')->data($new_team)->add();
@@ -1806,7 +1808,48 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 			$new_order = $this->db->filter_field('order_info', $order);
 			
 			$new_order_id = $this->db->table('order_info')->data($new_order)->add();
-			
+
+			if($new_order_id){
+ 
+				$margin_date=array(
+                    'user_id'=>$new_order['user_id'],
+                    'ppj_id'=>$new_order['ppj_id'],
+                    'ppj_no'=>$new_order['ppj_no'],
+                    'order_id'=>$new_order_id,
+                    'order_sn'=>$new_order['order_sn'],
+                    'pay_fee'=>$new_order['order_amount'],
+                    'createtime'=>time()
+				);
+                $margin_sql="SELECT * FROM ".$GLOBALS['ecs']->table('paipai_seller_pay_margin')." WHERE ppj_id='{$new_order['ppj_id']}' AND  ppj_no='{$new_order['ppj_no']}' ";       
+                $m_data=$this->db->query($margin_sql);  
+                // 保证金数据插入和更新 
+                if($m_data){
+                	$margin_update_sql="UPDATE ".$GLOBALS['ecs']->table('paipai_seller_pay_margin')." SET order_id=".$new_order_id.", order_sn=".$new_order['order_sn']." WHERE ppj_id='{$new_order['ppj_id']}' AND  ppj_no='{$new_order['ppj_no']}' ";
+                	$margin_update=$this->db->query($margin_update_sql);
+                }else{
+                	$margin_id=$GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('paipai_seller_pay_margin'), $margin_date, 'INSERT');              	
+                }
+                // 出价金额添加与修改
+                if($margin_update || $margin_id){
+                	$bid_sql="SELECT * FROM ".$GLOBALS['ecs']->table('paipai_goods_bid_user')." WHERE ppj_id='{$new_order['ppj_id']}' AND  ppj_no='{$new_order['ppj_no']}' ";    
+                    $bid=$this->db->query($bid_sql);                  
+                    $bid_price=$_POST['bid_price'];
+
+                    $bid_data=array(
+	                    'bid_price'=>$bid_price,
+	                    'bid_time'=>time(),
+	                    'createtime'=>time()
+                	);
+
+                    if($bid){
+                         $bid_update_sql="UPDATE ".$GLOBALS['ecs']->table('paipai_goods_bid_user')." SET bid_price=".$bid_price.", bid_time=".time()." WHERE ppj_id='{$new_order['ppj_id']}' AND  ppj_no='{$new_order['ppj_no']}' ";
+                        $bid_update=$this->db->query($bid_update_sql);
+                    }else{
+                        $bid_id=$GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('paipai_goods_bid_user'), $bid_data, 'INSERT'); 
+                    }
+                }
+				
+			}
 			
 			$error_no = $GLOBALS['db']->errno();
 			if (0 < $error_no && $error_no != 1062) {
@@ -1845,7 +1888,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 				$pushData = array(
 					'keyword1' => array('value' => $goods['goods_name'], 'color' => '#173177'),
 					'keyword2' => array('value' => $drp_money, 'color' => '#173177'),
-					'keyword3' => array('value' => date('Y-m-d', gmtime()), 'color' => '#173177'),
+					'keyword3' => array('value' => date('Y-m-d', time()), 'color' => '#173177'),
 					'keyword4' => array('value' => '下单成功', 'color' => '#173177'),
 					'remark'   => array('value' => '您可以进入微店中了解更多佣金详情。', 'color' => '#173177')
 					);
@@ -1976,7 +2019,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 
 		if ($order['extension_code'] == 'presale') {
 			$presale = dao('presale_activity')->field('pay_start_time, pay_end_time')->where(array('act_id' => $order['extension_id']))->find();
-			if (gmtime() < $presale['pay_end_time'] && $presale['pay_start_time'] < gmtime()) {
+			if (time() < $presale['pay_end_time'] && $presale['pay_start_time'] < gtime()) {
 				$order['presaletime'] = 1;
 			}
 			else {
@@ -2009,7 +2052,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 					$sql = 'SELECT COUNT(*)' . ' FROM ' . $GLOBALS['ecs']->table('order_goods') . (' WHERE order_id = \'' . $order['order_id'] . '\' ') . ' AND is_real = 1';
 
 					if ($GLOBALS['db']->getOne($sql) <= 0) {
-						update_order($order['order_id'], array('order_status' => OS_CONFIRMED, 'shipping_status' => SS_SHIPPED, 'shipping_time' => gmtime()));
+						update_order($order['order_id'], array('order_status' => OS_CONFIRMED, 'shipping_status' => SS_SHIPPED, 'shipping_time' => time()));
 
 						if (0 < $order['user_id']) {
 							$user = user_info($order['user_id']);
@@ -2151,7 +2194,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 			$auto_sms = $GLOBALS['db']->getRow($sql);
 			if (C('shop.sms_order_placed') == '1' && $sms_shop_mobile != '') {
 				if (!empty($auto_sms)) {
-					$autoData = array('item_type' => 1, 'user_id' => $order['user_id'], 'ru_id' => $sellerId, 'order_id' => $order_id, 'add_time' => gmtime());
+					$autoData = array('item_type' => 1, 'user_id' => $order['user_id'], 'ru_id' => $sellerId, 'order_id' => $order_id, 'add_time' => time());
 					dao('auto_sms')->data($autoData)->add();
 				}
 				else {
@@ -2162,7 +2205,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 
 			if (C('shop.send_service_email') && $service_email != '') {
 				if (!empty($auto_sms)) {
-					$autoData = array('item_type' => 2, 'user_id' => $order['user_id'], 'ru_id' => $sellerId, 'order_id' => $order_id, 'add_time' => gmtime());
+					$autoData = array('item_type' => 2, 'user_id' => $order['user_id'], 'ru_id' => $sellerId, 'order_id' => $order_id, 'add_time' => time());
 					dao('auto_sms')->data($autoData)->add();
 				}
 				else {
@@ -2170,7 +2213,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 					$this->assign('order', $order);
 					$this->assign('goods_list', $cart_goods);
 					$this->assign('shop_name', C('shop.shop_name'));
-					$send_date = local_date(C('shop.time_format'), gmtime());
+					$send_date = local_date(C('shop.time_format'), time());
 					$this->assign('send_date', $send_date);
 					$content = $this->fetch('', $tpl['template_content']);
 					send_mail(C('shop.shop_name'), $service_email, $tpl['template_subject'], $content, $tpl['is_html']);
