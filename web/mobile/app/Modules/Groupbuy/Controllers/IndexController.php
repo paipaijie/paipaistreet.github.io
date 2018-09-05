@@ -148,7 +148,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 		}
 		// var_dump($att);
 		$this->assign('att',$att);
-		var_dump(11);
+
 		$this->display();
 	}
 
@@ -184,7 +184,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 			}
 
 			$gb_list = paipai_buy_add_list($this->size, $page, $keywords, $this->sort, $this->order);
-			// var_dump($gb_list);
+
 			
 			exit(json_encode(array('gb_list' => $gb_list, 'totalPage' => ceil($count / $this->size))));
 					
@@ -194,6 +194,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 		foreach ($seo as $key => $value) {
 			$seo[$key] = html_in(str_replace(array('{sitename}', '{key}', '{description}'), array(C('shop.shop_name'), C('shop.shop_keywords'), C('shop.shop_desc')), $value));
 		}
+
 		$page_title = !empty($seo['title']) ? $seo['title'] : L('group_purchase_index');		
 		$keywords = !empty($seo['keywords']) ? $seo['keywords'] : C('shop.shop_keywords');	
 		$description = !empty($seo['description']) ? $seo['description'] : C('shop.shop_desc');		
@@ -221,6 +222,19 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 		
 
 		$group_buy = paipai_buy_info($this->groupbuyid);	
+		
+
+		$group_buy['start_time'] = strtotime($group_buy['start_time']);
+		$group_buy['end_time'] = strtotime($group_buy['end_time']);
+		$now = time();
+		
+		if($group_buy['end_date'] > $now && $group_buy['start_date'] < $now){
+			$goods['is_end'] = 1;
+		}else if($group_buy['start_date'] > $now){
+			$goods['is_end'] = 0;
+		}else{
+			$goods['is_end'] = 2;
+		}
 
 		if (empty($group_buy)) {
 			ecs_header("Location: ./\n");
@@ -324,15 +338,7 @@ class IndexController extends \App\Modules\Base\Controllers\FrontendController
 		$this->assign('type', 0);
 		$goods['url'] = build_uri('goods', array('gid' => $this->goods_id), $goods['goods_name']);
 
-		$now = time();
 		
-		if($group_buy['end_date'] > $now && $group_buy['start_date'] < $now){
-			$goods['is_end'] = 1;
-		}else if($group_buy['start_date'] > $now){
-			$goods['is_end'] = 0;
-		}else{
-			$goods['is_end'] = 2;
-		}
 
 
 		$this->assign('goods', $goods);

@@ -35,13 +35,14 @@
                 	
                     <section class="swiper-slide swiper-no-swiping product-list j-product-list product-list-medium" data="1">
                         <ul>
+
                             <%each gb_list as list%>
                             <%if list.is_end == 1 || list.is_end == 2%>
                             <li>
                                 <div class="product-div">
                                 
 
-                                    <div class="group-bq-box"   <%if list.is_end == 1%> style="display:none" <%else%>  style="display:block" <%/if%>>  <span>进行中</span> </div>
+                                    <div class="group-bq-box"   <%if list.is_end != 1%> style="display:none" <%else%>  style="display:block" <%/if%>>  <span>进行中</span> </div>
                                                                         
                                     <a class="product-div-link" href="<%list.url%>"></a>
                                     
