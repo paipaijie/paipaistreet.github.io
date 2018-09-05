@@ -298,7 +298,7 @@ else {
 		else {    // 修改功能
 			//  测试提交功能
 			$group_buy_id = intval($_REQUEST['id']);
-
+            
 			if ($group_buy_id <= 0) {
 				exit('invalid param');
 			}
@@ -334,6 +334,7 @@ else {
 			$group_buy['end_time'] = $group_buy['formated_end_date'];
 			
 		}
+
 		$smarty->assign('group_buy', $group_buy);	
 		$smarty->assign('ur_here', $_LANG['add_group_buy']);		
 		$smarty->assign('action_link', list_link($_REQUEST['act'] == 'add'));		
@@ -352,6 +353,7 @@ else {
 	// 添加和编辑拍拍活动
 	else if ($_REQUEST['act'] == 'insert_update') {
 		$group_buy_id = intval($_POST['act_id']);
+		
 		if (isset($_POST['finish']) || isset($_POST['succeed']) || isset($_POST['fail']) || isset($_POST['mail'])) {
 			if ($group_buy_id <= 0) {
 				sys_msg($_LANG['error_group_buy'], 1); //'您要操作的拍拍活动不存在'
@@ -723,8 +725,8 @@ else {
 			
 			if (0 < $group_buy_id) {//
 				
-				//var_dump($group_buy_id);
-				//exit;
+				// var_dump($group_buy_id);
+				// exit;
 				if (isset($_POST['review_status'])) {
 					
 					$review_status = !empty($_POST['review_status']) ? intval($_POST['review_status']) : 1;

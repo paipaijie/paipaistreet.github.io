@@ -85,10 +85,10 @@ $_LANG['error_goods_not_end'] = '您选择的商品目前有一个拍拍结束�
 
 $_LANG['js_languages']['error_goods_null'] = '请选择拍拍商品！';
 $_LANG['js_languages']['error_deposit'] = '您输入的保证金不是数字！';
-
 $_LANG['js_languages']['error_goods_deposit'] = '保证金必须大于批发价！';
-
+$_LANG['js_languages']['goods_start_fee'] = '请填写起拍价,可为0';
 $_LANG['js_languages']['error_deposit_null'] = '您输入的！';
+
 
 $_LANG['js_languages']['error_restrict_amount'] = '您输入的限购数量不是整数！';
 $_LANG['js_languages']['error_gift_integral'] = '您输入的赠送积分数不是整数！';
@@ -97,7 +97,7 @@ $_LANG['js_languages']['error_goods_price'] = '您没有输入有效的价格阶
 $_LANG['js_languages']['error_goods_nunber'] = '您没有输入有效的价格阶梯数量';
 $_LANG['js_languages']['ladder_price_min_notice'] = '阶梯价格不能小于保证金金额！';
 $_LANG['js_languages']['batch_drop_confirm'] = '您确定要删除选定的拍拍活动吗？';
-$_LANG['js_languages']['goods_start_fee'] = '请填写起拍价,可为0';
+
 
 $_LANG['error_exist_order'] = '该拍拍活动已经有订单，不能删除！';
 $_LANG['batch_drop_success'] = '成功删除了 %s 条拍拍活动记录（已经有订单的拍拍活动不能删除）。';
